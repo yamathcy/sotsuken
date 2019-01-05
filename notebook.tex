@@ -1,0 +1,3759 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{section\_analysis\_1002}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{music21} \PY{k}{as} \PY{n+nn}{m21}
+        \PY{k+kn}{from} \PY{n+nn}{music21} \PY{k}{import} \PY{o}{*} 
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pylab} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter}
+        \PY{k+kn}{import} \PY{n+nn}{sys}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{import} \PY{n+nn}{xml}
+        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k+kn}{import} \PY{n+nn}{matplotlib} \PY{k}{as} \PY{n+nn}{mpl}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{}ピッチナンバーと調の変換}
+        \PY{n}{map\PYZus{}pitch\PYZus{}class} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C\PYZsh{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{D}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{D\PYZsh{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{E}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F\PYZsh{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{G}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{G\PYZsh{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{B\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{B}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{11}\PY{p}{\PYZcb{}}
+        \PY{c+c1}{\PYZsh{}覚えているかどうか}
+        \PY{n}{memorable} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{あまり覚えてない}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{だいたいは覚えている}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{完璧に覚えている}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{\PYZcb{}}
+        \PY{c+c1}{\PYZsh{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{shuukei}\PY{p}{(}\PY{n}{vocalpart}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    音価・音高のペアのオブジェクトを楽譜から作る}
+        \PY{l+s+sd}{    タイの部分→連結}
+        
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{record} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{checker} \PY{o}{=} \PY{k+kc}{False}
+            \PY{c+c1}{\PYZsh{}タイがついた場合の途中記録用}
+            \PY{n}{pitch\PYZus{}tmp} \PY{o}{=} \PY{l+m+mf}{0.0}
+            \PY{n}{duration\PYZus{}tmp} \PY{o}{=} \PY{l+m+mf}{0.0}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{vocalpart}\PY{o}{.}\PY{n}{flat}\PY{o}{.}\PY{n}{notesAndRests}\PY{o}{.}\PY{n}{stream}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                
+                \PY{c+c1}{\PYZsh{}タイがついている}
+                \PY{k}{if} \PY{n}{i}\PY{o}{.}\PY{n}{tie}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{}タイのはじめの音ならまず音高を記録する}
+                    \PY{k}{if} \PY{n}{checker} \PY{o}{==} \PY{k+kc}{False}\PY{p}{:}
+                        \PY{k}{if} \PY{n}{i}\PY{o}{.}\PY{n}{isNote} \PY{o}{==} \PY{k+kc}{True}\PY{p}{:}
+                            \PY{c+c1}{\PYZsh{}record.append([i.pitch.ps,i.duration.quarterLength])}
+                            \PY{c+c1}{\PYZsh{}音符はノート番号}
+                            \PY{n}{pitch\PYZus{}tmp} \PY{o}{=} \PY{n}{i}\PY{o}{.}\PY{n}{pitch}\PY{o}{.}\PY{n}{ps}
+                            \PY{n}{duration\PYZus{}tmp} \PY{o}{+}\PY{o}{=} \PY{n}{i}\PY{o}{.}\PY{n}{duration}\PY{o}{.}\PY{n}{quarterLength}
+                        \PY{k}{elif} \PY{n}{i}\PY{o}{.}\PY{n}{isRest} \PY{o}{==} \PY{k+kc}{True}\PY{p}{:}
+                            \PY{c+c1}{\PYZsh{}record.append([\PYZdq{}rest\PYZdq{},i.duration.quarterLength])}
+                            \PY{c+c1}{\PYZsh{}休符は無限にする}
+                            \PY{n}{pitch\PYZus{}tmp} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inf}
+                            \PY{n}{duration\PYZus{}tmp} \PY{o}{+}\PY{o}{=} \PY{n}{i}\PY{o}{.}\PY{n}{duration}\PY{o}{.}\PY{n}{quarterLength}
+                        
+                    \PY{c+c1}{\PYZsh{}タイの途中の音なら音長を足していく      }
+                    \PY{k}{else}\PY{p}{:}
+                        \PY{n}{duration\PYZus{}tmp} \PY{o}{+}\PY{o}{=} \PY{n}{i}\PY{o}{.}\PY{n}{duration}\PY{o}{.}\PY{n}{quarterLength}
+                    
+                    \PY{c+c1}{\PYZsh{}タイはついている   }
+                    \PY{n}{checker} \PY{o}{=} \PY{k+kc}{True}
+                
+                \PY{c+c1}{\PYZsh{}タイがついてない    }
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{checker} \PY{o}{=} \PY{k+kc}{False}
+                    \PY{c+c1}{\PYZsh{}直前がタイの最後の音ならタイでつながって一音になった音を追加}
+                    \PY{k}{if} \PY{o+ow}{not} \PY{n}{duration\PYZus{}tmp} \PY{o}{==} \PY{l+m+mf}{0.0}\PY{p}{:}
+                        \PY{n}{record}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{pitch\PYZus{}tmp}\PY{p}{,}\PY{n}{duration\PYZus{}tmp}\PY{p}{]}\PY{p}{)}
+                        \PY{n}{duration\PYZus{}tmp} \PY{o}{=} \PY{l+m+mf}{0.0}
+                    
+                    \PY{c+c1}{\PYZsh{}そうでなければ普通に追加}
+                    \PY{k}{if} \PY{n}{i}\PY{o}{.}\PY{n}{isNote} \PY{o}{==} \PY{k+kc}{True}\PY{p}{:}
+                        \PY{n}{record}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{i}\PY{o}{.}\PY{n}{pitch}\PY{o}{.}\PY{n}{ps}\PY{p}{,}\PY{n}{i}\PY{o}{.}\PY{n}{duration}\PY{o}{.}\PY{n}{quarterLength}\PY{p}{]}\PY{p}{)}
+                    \PY{k}{elif} \PY{n}{i}\PY{o}{.}\PY{n}{isRest} \PY{o}{==} \PY{k+kc}{True}\PY{p}{:}
+                        \PY{n}{record}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{,}\PY{n}{i}\PY{o}{.}\PY{n}{duration}\PY{o}{.}\PY{n}{quarterLength}\PY{p}{]}\PY{p}{)}
+        
+            \PY{k}{return} \PY{n}{record}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{count\PYZus{}duration}\PY{p}{(}\PY{n}{song}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{}[音高,音価]が要素になったリストから音価を集計する}
+            \PY{n}{lis} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{song}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{lis}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{song}\PY{p}{[}\PY{n}{n}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+            \PY{n}{duration\PYZus{}count} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{lis}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{}集計結果のカウンターを返す}
+            \PY{c+c1}{\PYZsh{}sorted\PYZus{}count = sorted(duration\PYZus{}count.items(),key=lambda x:x[0])}
+            \PY{c+c1}{\PYZsh{}return sorted\PYZus{}count}
+            
+            \PY{k}{return} \PY{n}{duration\PYZus{}count}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{count\PYZus{}pitch}\PY{p}{(}\PY{n}{song}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{}[音高,音価]が要素になったリストから音高を集計する}
+            \PY{n}{lis} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{song}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{lis}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{song}\PY{p}{[}\PY{n}{n}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+            \PY{n}{pitch\PYZus{}count} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{lis}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{}集計結果のカウンターを返す}
+            \PY{k}{return} \PY{n}{pitch\PYZus{}count}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{make\PYZus{}pitch\PYZus{}bigram}\PY{p}{(}\PY{n}{shuukei\PYZus{}obj}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{}[音高,音価]が要素になったリストから音高のBigramのリストを作成する}
+            \PY{n}{pitch\PYZus{}diff} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{shuukei\PYZus{}obj}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                \PY{k}{if} \PY{n}{shuukei\PYZus{}obj}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{10000} \PY{o+ow}{and} \PY{n}{shuukei\PYZus{}obj}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{10000}\PY{p}{:}
+                	\PY{k}{pass}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{pitch\PYZus{}diff}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{shuukei\PYZus{}obj}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{shuukei\PYZus{}obj}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+            \PY{k}{return} \PY{n}{pitch\PYZus{}diff}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{make\PYZus{}duration\PYZus{}bigram}\PY{p}{(}\PY{n}{shuukei\PYZus{}obj}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{}[音高,音価]が要素になったリストから音価のBigramのリストを作成する}
+            \PY{n}{duration\PYZus{}diff} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{shuukei\PYZus{}obj}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                \PY{n}{duration\PYZus{}diff}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{shuukei\PYZus{}obj}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{shuukei\PYZus{}obj}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+            \PY{k}{return} \PY{n}{duration\PYZus{}diff}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{def} \PY{n+nf}{jump\PYZus{}rate}\PY{p}{(}\PY{n}{bigram\PYZus{}status}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{}バイグラム列から跳躍、下降跳躍、上向跳躍の割合を返す}
+             \PY{n}{up\PYZus{}jump} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{down\PYZus{}jump} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{slope} \PY{o}{=} \PY{l+m+mi}{0} 
+             \PY{k}{for} \PY{n}{key} \PY{o+ow}{in} \PY{n}{bigram\PYZus{}status}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{key}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{2}\PY{p}{:}
+                     \PY{n}{slope} \PY{o}{+}\PY{o}{=} \PY{n}{bigram\PYZus{}status}\PY{p}{[}\PY{n}{key}\PY{p}{]}
+                 \PY{k}{elif} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{key}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10000}\PY{p}{:}
+                     \PY{k}{if} \PY{n}{key} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                     	\PY{n}{up\PYZus{}jump} \PY{o}{+}\PY{o}{=} \PY{n}{bigram\PYZus{}status}\PY{p}{[}\PY{n}{key}\PY{p}{]}
+                     \PY{k}{else}\PY{p}{:}
+                         \PY{n}{down\PYZus{}jump} \PY{o}{+}\PY{o}{=} \PY{n}{bigram\PYZus{}status}\PY{p}{[}\PY{n}{key}\PY{p}{]}
+             \PY{n}{all\PYZus{}of\PYZus{}notes} \PY{o}{=} \PY{n}{up\PYZus{}jump} \PY{o}{+} \PY{n}{down\PYZus{}jump} \PY{o}{+} \PY{n}{slope}
+             
+             \PY{k}{return} \PY{p}{[}\PY{p}{(}\PY{n}{up\PYZus{}jump}\PY{o}{+}\PY{n}{down\PYZus{}jump}\PY{p}{)}\PY{o}{/}\PY{n}{all\PYZus{}of\PYZus{}notes}\PY{p}{,}\PY{n}{up\PYZus{}jump}\PY{o}{/}\PY{n}{all\PYZus{}of\PYZus{}notes}\PY{p}{,}\PY{n}{down\PYZus{}jump}\PY{o}{/}\PY{n}{all\PYZus{}of\PYZus{}notes}\PY{p}{]}         
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{delete\PYZus{}inf}\PY{p}{(}\PY{n}{bigram\PYZus{}status}\PY{p}{)}\PY{p}{:} 
+             \PY{c+c1}{\PYZsh{}休符を含むBigramから休符を削除}
+             \PY{k}{del} \PY{n}{bigram\PYZus{}status}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{]}
+             \PY{k}{del} \PY{n}{bigram\PYZus{}status}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{]}
+             \PY{k}{del} \PY{n}{bigram\PYZus{}status}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]}
+             \PY{k}{return} \PY{n}{bigram\PYZus{}status}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{}Aメロ,Bメロ,サビに分割}
+         \PY{c+c1}{\PYZsh{}各セクションの始点と終点の小節番号を引数に与える}
+         \PY{k}{def} \PY{n+nf}{separate\PYZus{}section}\PY{p}{(}\PY{n}{piece}\PY{p}{,}\PY{n}{a\PYZus{}start}\PY{p}{,}\PY{n}{a\PYZus{}end}\PY{p}{,}\PY{n}{b\PYZus{}start}\PY{p}{,}\PY{n}{b\PYZus{}end}\PY{p}{,}\PY{n}{s\PYZus{}start}\PY{p}{,}\PY{n}{s\PYZus{}end}\PY{p}{)}\PY{p}{:}
+             \PY{n}{sections} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{amero} \PY{o}{=} \PY{n}{piece}\PY{o}{.}\PY{n}{measures}\PY{p}{(}\PY{n}{a\PYZus{}start}\PY{p}{,}\PY{n}{a\PYZus{}end}\PY{p}{)}
+             \PY{n}{bmero} \PY{o}{=} \PY{n}{piece}\PY{o}{.}\PY{n}{measures}\PY{p}{(}\PY{n}{b\PYZus{}start}\PY{p}{,}\PY{n}{b\PYZus{}end}\PY{p}{)}
+             \PY{n}{sabi} \PY{o}{=} \PY{n}{piece}\PY{o}{.}\PY{n}{measures}\PY{p}{(}\PY{n}{s\PYZus{}start}\PY{p}{,}\PY{n}{s\PYZus{}end}\PY{p}{)}
+                 
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{sabi}\PY{p}{)}
+             \PY{n}{sections}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{amero}\PY{p}{)}
+             \PY{n}{sections}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{bmero}\PY{p}{)}
+             \PY{n}{sections}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{sabi}\PY{p}{)}
+             
+             \PY{k}{return} \PY{n}{sections}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{}カウンターオブジェクトのプロット}
+         \PY{k}{def} \PY{n+nf}{counter\PYZus{}plot}\PY{p}{(}\PY{n}{counter}\PY{p}{,}\PY{n}{song}\PY{p}{,}\PY{n}{section}\PY{p}{,}\PY{n}{analysee\PYZus{}name}\PY{p}{,}\PY{n}{bar\PYZus{}color}\PY{p}{)}\PY{p}{:}
+             \PY{n}{left} \PY{o}{=} \PY{n}{counter}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}
+             \PY{n}{height} \PY{o}{=} \PY{n}{counter}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{song: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ (}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{s }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{song}\PY{p}{,}\PY{n}{section}\PY{p}{,}\PY{n}{analysee\PYZus{}name}\PY{p}{)}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{left}\PY{p}{,}\PY{n}{height}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{n}{bar\PYZus{}color}\PY{p}{)}
+             \PY{k}{for} \PY{n}{x}\PY{p}{,} \PY{n}{y} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{left}\PY{p}{,} \PY{n}{height}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{try}\PY{p}{:} 
+                     \PY{n}{plt}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{ha}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{va}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bottom}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{k}{except} \PY{n+ne}{ValueError}\PY{p}{:} 
+                     \PY{k}{pass} 
+             \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{}音高、音価のペアのリストをセクションごとに作成}
+         \PY{k}{def} \PY{n+nf}{make\PYZus{}note}\PY{p}{(}\PY{n}{sections}\PY{p}{)}\PY{p}{:}
+             \PY{n}{notes} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{item} \PY{o+ow}{in} \PY{n}{sections}\PY{p}{:}
+                 \PY{n}{note\PYZus{}obj} \PY{o}{=} \PY{n}{shuukei}\PY{p}{(}\PY{n}{item}\PY{p}{)} 
+                 \PY{n}{notes}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{note\PYZus{}obj}\PY{p}{)}
+             \PY{k}{return} \PY{n}{notes}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{}セクションごとに音高、音価のペア列から音程列を作成}
+         \PY{k}{def} \PY{n+nf}{make\PYZus{}pitch\PYZus{}diff}\PY{p}{(}\PY{n}{notes}\PY{p}{)}\PY{p}{:}
+             \PY{n}{ontei} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{item} \PY{o+ow}{in} \PY{n}{notes}\PY{p}{:}
+                 \PY{n}{bigram} \PY{o}{=} \PY{n}{make\PYZus{}pitch\PYZus{}bigram}\PY{p}{(}\PY{n}{item}\PY{p}{)}
+                 \PY{n}{onteiobj} \PY{o}{=} \PY{n}{delete\PYZus{}inf}\PY{p}{(}\PY{n}{Counter}\PY{p}{(}\PY{n}{bigram}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{ontei}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{onteiobj}\PY{p}{)}
+             \PY{k}{return} \PY{n}{ontei}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{}音域の計算}
+         \PY{k}{def} \PY{n+nf}{pitch\PYZus{}range}\PY{p}{(}\PY{n}{sec}\PY{p}{)}\PY{p}{:}
+             \PY{n}{a} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{sec}\PY{o}{.}\PY{n}{flat}\PY{o}{.}\PY{n}{notes}\PY{p}{:}
+                 \PY{n}{a}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{o}{.}\PY{n}{pitch}\PY{o}{.}\PY{n}{ps}\PY{p}{)}
+             \PY{n}{max\PYZus{}note} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{)}
+             \PY{n}{min\PYZus{}note} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{p}{[}\PY{n}{max\PYZus{}note}\PY{p}{,}\PY{n}{min\PYZus{}note}\PY{p}{,}\PY{n}{max\PYZus{}note}\PY{o}{\PYZhy{}}\PY{n}{min\PYZus{}note}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{}音程の方向変化割合}
+         \PY{k}{def} \PY{n+nf}{count\PYZus{}melody\PYZus{}direction}\PY{p}{(}\PY{n}{sec}\PY{p}{)}\PY{p}{:}
+             \PY{n}{a} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{direction\PYZus{}change} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{note} \PY{o}{=} \PY{l+m+mi}{0} 
+             \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{sec}\PY{o}{.}\PY{n}{flat}\PY{o}{.}\PY{n}{notes}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{a}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{o}{.}\PY{n}{pitch}\PY{o}{.}\PY{n}{ps}\PY{p}{)}
+                 \PY{k}{if} \PY{n}{num} \PY{o}{\PYZlt{}} \PY{l+m+mi}{2}\PY{p}{:}
+                     \PY{k}{pass}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{note} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1} 
+                     \PY{n+nb}{dir} \PY{o}{=} \PY{p}{(}\PY{n}{a}\PY{p}{[}\PY{n}{num}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{a}\PY{p}{[}\PY{n}{num}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{a}\PY{p}{[}\PY{n}{num}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{a}\PY{p}{[}\PY{n}{num}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+                     \PY{c+c1}{\PYZsh{}チェック用↓}
+                     \PY{c+c1}{\PYZsh{}print(\PYZdq{}一つ目\PYZob{}\PYZcb{}二つ目\PYZob{}\PYZcb{}三つ目\PYZob{}\PYZcb{}\PYZdq{}.format(a[num\PYZhy{}2],a[num\PYZhy{}1],a[num]))}
+                     \PY{c+c1}{\PYZsh{}print(\PYZdq{}\PYZob{}\PYZcb{}が差です\PYZdq{}.format(dir))}
+                     \PY{k}{if} \PY{n+nb}{dir} \PY{o}{\PYZlt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                         \PY{c+c1}{\PYZsh{}print(\PYZdq{}方向変化しました\PYZdq{})}
+                         \PY{n}{direction\PYZus{}change} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+             \PY{k}{return} \PY{n}{direction\PYZus{}change}\PY{o}{/}\PY{n}{note}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{c+c1}{\PYZsh{}どの区間の音かで異なる数値を返す関数}
+         \PY{k}{def} \PY{n+nf}{weighted\PYZus{}pitch}\PY{p}{(}\PY{n}{num}\PY{p}{,}\PY{n}{w1}\PY{p}{,}\PY{n}{w2}\PY{p}{,}\PY{n}{w3}\PY{p}{,}\PY{n}{point1}\PY{p}{,}\PY{n}{point2}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    note\PYZus{}num→入力音符のノートナンバー}
+         \PY{l+s+sd}{    wi→返す重み}
+         \PY{l+s+sd}{    pointi→声の喚声点}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{k}{if} \PY{n}{num} \PY{o}{\PYZlt{}} \PY{n}{point1}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{w1}
+             \PY{k}{elif} \PY{n}{num} \PY{o}{\PYZlt{}} \PY{n}{point2}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{w2}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{w3}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{c+c1}{\PYZsh{}エントロピー算出}
+         \PY{k}{def} \PY{n+nf}{caluculate\PYZus{}entropy}\PY{p}{(}\PY{n}{note}\PY{p}{)}\PY{p}{:}
+             \PY{n}{count} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{note}\PY{p}{)}
+             \PY{n}{n} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{count}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{n}{info} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{n}{prob}\PY{o}{=}\PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             
+             \PY{k}{for} \PY{n}{key}\PY{p}{,}\PY{n}{value} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{count}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{count}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}print(\PYZdq{}note:\PYZob{}\PYZcb{},How many:\PYZob{}\PYZcb{}\PYZdq{}.format(key,value))}
+                 \PY{n}{prob}\PY{p}{[}\PY{n}{key}\PY{p}{]} \PY{o}{=} \PY{n}{value}\PY{o}{/}\PY{n}{n}
+                 \PY{n}{info}\PY{p}{[}\PY{n}{key}\PY{p}{]} \PY{o}{=} \PY{n}{prob}\PY{p}{[}\PY{n}{key}\PY{p}{]} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{prob}\PY{p}{[}\PY{n}{key}\PY{p}{]}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{}print(\PYZdq{}情報量:\PYZhy{}\PYZob{}\PYZcb{}*\PYZob{}\PYZcb{}\PYZdq{}.format(prob[key],info[key]))}
+             
+             \PY{n}{entropy} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1} \PY{o}{*} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{info}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{n}{entropy}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{c+c1}{\PYZsh{}WPCS値}
+         \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{def weighted\PYZus{}pitch\PYZus{}count\PYZus{}sum(sec,w1,w2,w3):}
+         \PY{l+s+sd}{    wpcs = 0}
+         \PY{l+s+sd}{    for i in sec.flat.notes:}
+         \PY{l+s+sd}{        wpcs += weighted\PYZus{}pitch(i.pitch.ps,w1,w2,w3)}
+         \PY{l+s+sd}{    return wpcs }
+         \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         
+         \PY{k}{def} \PY{n+nf}{weighted\PYZus{}pitch\PYZus{}count\PYZus{}sum}\PY{p}{(}\PY{n}{sec}\PY{p}{,}\PY{n}{w1}\PY{p}{,}\PY{n}{w2}\PY{p}{,}\PY{n}{w3}\PY{p}{)}\PY{p}{:}
+             \PY{n}{wpcs} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{sec}\PY{p}{:}
+                 \PY{n}{wpcs} \PY{o}{+}\PY{o}{=} \PY{n}{weighted\PYZus{}pitch}\PY{p}{(}\PY{n}{i}\PY{p}{,}\PY{n}{w1}\PY{p}{,}\PY{n}{w2}\PY{p}{,}\PY{n}{w3}\PY{p}{)}
+             \PY{k}{return} \PY{n}{wpcs} 
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{c+c1}{\PYZsh{}オクターブや調がおかしい場合の前処理}
+         \PY{k}{def} \PY{n+nf}{note\PYZus{}remadiation}\PY{p}{(}\PY{n}{vocal}\PY{p}{,}\PY{n}{seminotes}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{seminotes} \PY{o}{==} \PY{l+m+mi}{0} \PY{p}{:}
+                 \PY{k}{pass}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{vocal}\PY{o}{.}\PY{n}{flat}\PY{o}{.}\PY{n}{notes}\PY{o}{.}\PY{n}{stream}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}for n in pitchStream.recurse().notes:}
+                     \PY{n}{i}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{n}{seminotes}\PY{p}{,} \PY{n}{inPlace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+             \PY{k}{return} \PY{n}{vocal}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{c+c1}{\PYZsh{}ノートナンバーを音名に変換}
+         \PY{k}{def} \PY{n+nf}{notenum2pitch}\PY{p}{(}\PY{n}{num}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{num} \PY{o}{\PYZlt{}} \PY{l+m+mi}{1000}\PY{p}{:}
+                 \PY{n}{convert} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C\PYZsh{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{D}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{D\PYZsh{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{E}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F\PYZsh{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{G}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{G\PYZsh{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{9}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A\PYZsh{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{11}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{B}\PY{l+s+s2}{\PYZdq{}}\PY{p}{\PYZcb{}}
+                 \PY{n}{octave} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{num}\PY{o}{/}\PY{l+m+mi}{12}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+                 \PY{k}{return} \PY{n}{convert}\PY{p}{[}\PY{n}{num}\PY{o}{\PYZpc{}}\PY{k}{12}]+ str(octave)
+             \PY{k}{elif} \PY{n}{num} \PY{o}{==} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{:}
+                 \PY{k}{return} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Rest}\PY{l+s+s2}{\PYZdq{}}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{k}{raise} \PY{n+ne}{TypeError}
+                 
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{c+c1}{\PYZsh{}セクションごとに各音の音価の総和を出力}
+         \PY{k}{def} \PY{n+nf}{make\PYZus{}sum}\PY{p}{(}\PY{n}{secs}\PY{p}{)}\PY{p}{:}
+             \PY{n}{state} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{notes} \PY{o+ow}{in} \PY{n}{secs}\PY{p}{:}
+                 \PY{n}{dic} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+                 \PY{k}{for} \PY{n}{note} \PY{o+ow}{in} \PY{n}{notes}\PY{p}{:}
+                     \PY{k}{if} \PY{o+ow}{not} \PY{n}{note}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o+ow}{in} \PY{n}{dic}\PY{p}{:}
+                         \PY{n}{dic}\PY{p}{[}\PY{n}{note}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]} \PY{o}{=} \PY{n}{note}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                     \PY{k}{else}\PY{p}{:}
+                         \PY{n}{dic}\PY{p}{[}\PY{n}{note}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{note}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                 \PY{n}{state}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{dic}\PY{p}{)}
+             \PY{k}{return} \PY{n}{state} 
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{c+c1}{\PYZsh{}藤井論文音価難易度}
+         \PY{k}{def} \PY{n+nf}{mode\PYZus{}multiOK}\PY{p}{(}\PY{n}{list\PYZus{}obj}\PY{p}{)}\PY{p}{:}
+             \PY{n}{arr} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{counter\PYZus{}most\PYZus{}common} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{list\PYZus{}obj}\PY{p}{)}\PY{o}{.}\PY{n}{most\PYZus{}common}\PY{p}{(}\PY{p}{)}
+             \PY{n}{longest} \PY{o}{=} \PY{n}{counter\PYZus{}most\PYZus{}common}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{counter\PYZus{}most\PYZus{}common}\PY{p}{:}
+                 \PY{n}{l} \PY{o}{=} \PY{n}{i}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                 \PY{k}{if} \PY{n}{l} \PY{o}{==} \PY{n}{longest}\PY{p}{:}
+                     \PY{n}{arr}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{k}{break}
+             \PY{k}{return} \PY{n}{arr}
+         
+         \PY{k}{def} \PY{n+nf}{dc}\PY{p}{(}\PY{n}{length}\PY{p}{)}\PY{p}{:}
+             \PY{n}{difficulty} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{k}{if} \PY{n}{length} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mf}{2.0}\PY{p}{:}
+                 \PY{n}{difficulty} \PY{o}{=} \PY{l+m+mf}{2.0}
+             \PY{k}{elif} \PY{n}{length} \PY{o}{==} \PY{l+m+mf}{1.0}\PY{p}{:}
+                 \PY{n}{difficulty} \PY{o}{=} \PY{l+m+mf}{4.0}
+             \PY{k}{elif} \PY{n}{length} \PY{o}{==} \PY{l+m+mf}{0.5}\PY{p}{:}
+                 \PY{n}{difficulty} \PY{o}{=} \PY{l+m+mf}{6.0}
+             \PY{k}{elif} \PY{n}{length} \PY{o}{==} \PY{l+m+mf}{0.25}\PY{p}{:}
+                 \PY{n}{difficulty} \PY{o}{=} \PY{l+m+mf}{8.0}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{difficulty} \PY{o}{=} \PY{l+m+mf}{9.0}
+             \PY{k}{return} \PY{n}{difficulty}
+         
+         
+         \PY{k}{def} \PY{n+nf}{rhythm\PYZus{}difficulty}\PY{p}{(}\PY{n}{notes}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{}print(\PYZdq{}notes:\PYZob{}\PYZcb{}\PYZdq{}.format(notes))}
+             \PY{n}{l} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{c+c1}{\PYZsh{}全ての音価を記録}
+             \PY{n}{tmp} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{c+c1}{\PYZsh{}最頻の音価より短いもの}
+             \PY{n}{longer} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{c+c1}{\PYZsh{}最頻の音価より長いもの}
+             \PY{n}{shorter} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{c+c1}{\PYZsh{}}
+             \PY{n}{a}\PY{o}{=} \PY{l+m+mf}{0.0}
+             \PY{n}{s} \PY{o}{=} \PY{l+m+mf}{0.0}
+             \PY{n}{d1} \PY{o}{=} \PY{l+m+mf}{0.0}
+             
+             \PY{c+c1}{\PYZsh{}音価列の記録}
+             \PY{k}{for} \PY{n}{note} \PY{o+ow}{in} \PY{n}{notes}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}print(\PYZdq{}note:\PYZob{}\PYZcb{}\PYZdq{}.format(note))}
+                 \PY{n}{dur} \PY{o}{=} \PY{n}{note}\PY{o}{.}\PY{n}{duration}\PY{o}{.}\PY{n}{quarterLength}
+                 \PY{c+c1}{\PYZsh{}print(\PYZdq{}\PYZob{}\PYZcb{} append to tmp\PYZdq{}.format(dur))}
+                 \PY{n}{tmp}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{dur}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}最頻音価の記録}
+             \PY{n}{l} \PY{o}{=} \PY{n}{mode\PYZus{}multiOK}\PY{p}{(}\PY{n}{tmp}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}print(\PYZdq{}l:\PYZob{}\PYZcb{}\PYZdq{}.format(l))}
+             \PY{n}{dp} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{n}{dc}\PY{p}{,}\PY{n}{l}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}print(\PYZdq{}dp:\PYZob{}\PYZcb{}\PYZdq{}.format(dp))}
+             \PY{c+c1}{\PYZsh{}最頻音価より長い/短いに着目して記録}
+             \PY{k}{for} \PY{n}{note} \PY{o+ow}{in} \PY{n}{notes}\PY{p}{:}
+                
+                 \PY{n}{dur} \PY{o}{=} \PY{n}{note}\PY{o}{.}\PY{n}{duration}\PY{o}{.}\PY{n}{quarterLength}
+                 \PY{c+c1}{\PYZsh{}print(\PYZdq{}dur:\PYZob{}\PYZcb{}\PYZdq{}.format(dur))}
+                 \PY{k}{if} \PY{n}{dur} \PY{o+ow}{in} \PY{n}{l}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{}print(\PYZdq{}skip\PYZdq{})}
+                     \PY{k}{pass}
+                 \PY{k}{elif} \PY{n}{dur} \PY{o}{\PYZlt{}} \PY{n+nb}{min}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{shorter}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{dur}\PY{p}{)}
+                 \PY{k}{elif} \PY{n}{dur} \PY{o}{\PYZgt{}} \PY{n+nb}{max}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{longer}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{dur}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}print(\PYZdq{}l:\PYZob{}\PYZcb{},s:\PYZob{}\PYZcb{}\PYZdq{}.format(longer,shorter))      }
+             \PY{n}{n} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{shorter}\PY{p}{)} \PY{o}{+} \PY{n+nb}{len}\PY{p}{(}\PY{n}{longer}\PY{p}{)} 
+             \PY{k}{if} \PY{n}{n} \PY{o}{==}\PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{dp}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{a\PYZus{}max} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{o}{\PYZhy{}}\PY{n}{dp}\PY{p}{)}\PY{o}{/}\PY{n}{n}
+                 \PY{n}{s\PYZus{}max} \PY{o}{=} \PY{p}{(}\PY{n}{dp}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{/}\PY{n}{n}
+                 \PY{k}{for} \PY{n}{snote} \PY{o+ow}{in} \PY{n}{shorter}\PY{p}{:}
+                     \PY{n}{a} \PY{o}{+}\PY{o}{=} \PY{p}{(}\PY{p}{(}\PY{n}{dc}\PY{p}{(}\PY{n}{snote}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{dp}\PY{p}{)}\PY{o}{/}\PY{n}{dp}\PY{p}{)} \PY{o}{*} \PY{n}{a\PYZus{}max}
+                 \PY{k}{for} \PY{n}{lnote} \PY{o+ow}{in} \PY{n}{longer}\PY{p}{:}
+                     \PY{n}{s} \PY{o}{+}\PY{o}{=} \PY{p}{(}\PY{p}{(}\PY{n}{dp}\PY{o}{\PYZhy{}} \PY{n}{dc}\PY{p}{(}\PY{n}{lnote}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{n}{dp}\PY{p}{)} \PY{o}{*} \PY{n}{s\PYZus{}max}
+                 \PY{c+c1}{\PYZsh{}print(\PYZdq{}a:\PYZob{}\PYZcb{},s:\PYZob{}\PYZcb{}\PYZdq{}.format(a,s))}
+                 
+                 \PY{n}{d1} \PY{o}{=} \PY{n}{dp}\PY{o}{+}\PY{n}{a}\PY{o}{\PYZhy{}}\PY{n}{s}
+             
+                 \PY{k}{return} \PY{n}{d1}
+\end{Verbatim}
+
+
+    \hypertarget{ux4e88ux5099ux5b9fux9a13ux6982ux8981}{%
+\subsection{予備実験概要}\label{ux4e88ux5099ux5b9fux9a13ux6982ux8981}}
+
+実験参加者数　6人（21～24歳の男子６人、内音楽経験あり３人）
+実施楽曲　6曲＋α
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{c+c1}{\PYZsh{}セクションを解析しやすいように}
+         \PY{n}{analysis\PYZus{}corpus} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{analysis\PYZus{}section} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A melody}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{B melody}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sabi}\PY{l+s+s2}{\PYZdq{}}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \hypertarget{ux30c6ux30b9ux30c8ux30b3ux30fcux30c9}{%
+\subsection{テストコード}\label{ux30c6ux30b9ux30c8ux30b3ux30fcux30c9}}
+
+\#楽譜の読み込み cherry =
+m21.converter.parse(``./cherry.xml'').parts{[}0{]}
+\#各セクションに分ける cherry\_section = {[}{]} cherry\_a =
+cherry.measures(1,8) cherry\_b = cherry.measures(9,16) cherry\_s =
+cherry.measures(16,24)
+
+cherry\_section.append(cherry\_a) cherry\_section.append(cherry\_b)
+cherry\_section.append(cherry\_s) \#音高,音価の列のオブジェクトを作成
+cherry\_section\_notes = {[}{]} for item in cherry\_section: notes =
+shuukei(item) cherry\_section\_notes.append(notes) \#音高Bigramを作成
+cherry\_ontei = {[}{]} for item in cherry\_section\_notes: bigram =
+make\_pitch\_bigram(item) onteiobj = delete\_inf(Counter(bigram))
+cherry\_ontei.append(onteiobj) \#音高差の集計をプロット for num,item in
+enumerate(cherry\_ontei):
+counter\_plot(item,``cherry'',str(analysis\_section{[}num{]}),``pitch\_diff'')
+\#音高の集計 for item in cherry\_section:
+item.plot(``histogram'',``pitch'')
+item.plot(``histogram'',``pitchclass'')
+
+for num,item in enumerate(cherry\_section\_notes): dcount =
+count\_duration(item) \#print(dcount) duras = \{\} for i in
+sorted(dcount.keys()): new\_key = str(i) duras{[}new\_key{]} =
+dcount{[}i{]}
+counter\_plot(duras,``cherry'',str(analysis\_section{[}num{]}),``duration
+by Quarter Length'') \#調,音符数,跳躍率 analysis\_section =
+\{0:``Amelody'',1:``Bmelody'',2:``Sabi''\} print(len(cherry))
+print(analysis.discrete.analyzeStream(cherry,``Krumhansl'')) for
+num,section in enumerate(cherry\_section): print(section)
+print(``-------\{\}の統計情報---------''.format(analysis\_section{[}num{]}))
+print(``調:\{\}''.format(analysis.discrete.analyzeStream(section,``Krumhansl'')))
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{k}{class} \PY{n+nc}{gakuhu\PYZus{}object}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    ボーカルパートのあらゆる情報を保持するクラス}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    \PYZus{}\PYZus{}init\PYZus{}\PYZus{}(self,file)　}
+         \PY{l+s+sd}{    初期化、読み込む楽譜ファイルを与える}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    show\PYZus{}key(self)}
+         \PY{l+s+sd}{    調の表示をセクションごとにおこなう}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             
+             \PY{c+c1}{\PYZsh{}コンストラクタ}
+             \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,}\PY{n}{name}\PY{p}{,}\PY{n}{file}\PY{p}{,}\PY{n}{separate\PYZus{}info}\PY{p}{,}\PY{n}{seminote}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}楽曲名}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{name} \PY{o}{=} \PY{n}{name}
+                 \PY{c+c1}{\PYZsh{}ボーカルパートを読み込み（一つ目のパートがボーカルである前提・・・）}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{piece} \PY{o}{=} \PY{n}{note\PYZus{}remadiation}\PY{p}{(}\PY{n}{m21}\PY{o}{.}\PY{n}{converter}\PY{o}{.}\PY{n}{parse}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{file}\PY{p}{)}\PY{o}{.}\PY{n}{parts}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{seminote}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{}Aメロ、Bメロ、サビのオブジェクトを保持する}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sections} \PY{o}{=} \PY{n}{separate\PYZus{}section}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{piece}\PY{p}{,}\PY{n}{separate\PYZus{}info}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{separate\PYZus{}info}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{separate\PYZus{}info}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}\PY{n}{separate\PYZus{}info}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,}\PY{n}{separate\PYZus{}info}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{,}\PY{n}{separate\PYZus{}info}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{}音高、音列のペア}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{notes} \PY{o}{=} \PY{n}{make\PYZus{}note}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sections}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{}音程列}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ontei} \PY{o}{=} \PY{n}{make\PYZus{}pitch\PYZus{}diff}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{notes}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{}各音の音価の総和}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sum\PYZus{}note\PYZus{}length} \PY{o}{=} \PY{n}{make\PYZus{}sum}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{notes}\PY{p}{)}
+                 
+                 \PY{n}{analysis\PYZus{}corpus}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}調の表示}
+             \PY{k}{def} \PY{n+nf}{show\PYZus{}key}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{+}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{name} \PY{o}{+}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                 \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{section} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sections}\PY{p}{)}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{の統計情報\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{調:}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{analysis}\PY{o}{.}\PY{n}{discrete}\PY{o}{.}\PY{n}{analyzeStream}\PY{p}{(}\PY{n}{section}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Krumhansl}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    \PYZsh{}音高、音価のペアのリストをセクションごとに作成}
+         \PY{l+s+sd}{    def make\PYZus{}note(self):}
+         \PY{l+s+sd}{        for item in self.sections:}
+         \PY{l+s+sd}{            note\PYZus{}obj = shuukei(item) }
+         \PY{l+s+sd}{            self.notes.append(note\PYZus{}obj)}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    \PYZsh{}音程列の作成}
+         \PY{l+s+sd}{    def make\PYZus{}pitch\PYZus{}diff(self):}
+         \PY{l+s+sd}{        for item in self.notes:}
+         \PY{l+s+sd}{            bigram = make\PYZus{}pitch\PYZus{}bigram(item)}
+         \PY{l+s+sd}{            onteiobj = delete\PYZus{}inf(Counter(bigram))}
+         \PY{l+s+sd}{            self.notes.append(onteiobj)}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}    
+             \PY{c+c1}{\PYZsh{}音高のカウント}
+             \PY{k}{def} \PY{n+nf}{counting\PYZus{}pitch}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{item} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sections}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{pitch\PYZus{}space} \PY{o}{=} \PY{n}{graph}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{HistogramPitchSpace}\PY{p}{(}\PY{n}{item}\PY{p}{,}\PY{n}{xHideUnused}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}\PY{n}{title}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{name} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ pitch}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                     \PY{n}{pitch\PYZus{}space}\PY{o}{.}\PY{n}{colors} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{magenta}\PY{l+s+s2}{\PYZdq{}}
+                     \PY{n}{pitch\PYZus{}space}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+                     \PY{n}{pitch\PYZus{}class} \PY{o}{=} \PY{n}{graph}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{HistogramPitchClass}\PY{p}{(}\PY{n}{item}\PY{p}{,}\PY{n}{xHideUnused}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}\PY{n}{title}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{name} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+}  \PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ pitch class}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                     \PY{n}{pitch\PYZus{}class}\PY{o}{.}\PY{n}{colors} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cyan}\PY{l+s+s2}{\PYZdq{}}
+                     \PY{n}{pitch\PYZus{}class}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+                     \PY{c+c1}{\PYZsh{}item.plot(\PYZdq{}histogram\PYZdq{},\PYZdq{}pitch\PYZdq{},xHideUnused=False)}
+                     \PY{c+c1}{\PYZsh{}item.plot(\PYZdq{}histogram\PYZdq{},\PYZdq{}pitchclass\PYZdq{},xHideUnused=False) }
+                 
+             \PY{c+c1}{\PYZsh{}音価のカウント}
+             \PY{k}{def} \PY{n+nf}{counting\PYZus{}duration}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{item} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{notes}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{dcount} \PY{o}{=} \PY{n}{count\PYZus{}duration}\PY{p}{(}\PY{n}{item}\PY{p}{)}
+                     \PY{c+c1}{\PYZsh{}print(dcount)}
+                     \PY{n}{duras} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+                     \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{dcount}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                         \PY{n}{new\PYZus{}key} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                         \PY{n}{duras}\PY{p}{[}\PY{n}{new\PYZus{}key}\PY{p}{]} \PY{o}{=} \PY{n}{dcount}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                     \PY{n}{counter\PYZus{}plot}\PY{p}{(}\PY{n}{duras}\PY{p}{,}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{name}\PY{p}{,}\PY{n+nb}{str}\PY{p}{(}\PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{duration by Quarter Length}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{g}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                     
+             \PY{c+c1}{\PYZsh{}音高差の集計をプロット}
+             \PY{k}{def} \PY{n+nf}{plot\PYZus{}pitch\PYZus{}diff}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{item} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ontei}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{counter\PYZus{}plot}\PY{p}{(}\PY{n}{item}\PY{p}{,}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{name}\PY{p}{,}\PY{n+nb}{str}\PY{p}{(}\PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pitch\PYZus{}diff}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                 
+             \PY{c+c1}{\PYZsh{}跳躍進行の割合を表示        }
+             \PY{k}{def} \PY{n+nf}{calucurate\PYZus{}jump}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{sect} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ontei}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{a} \PY{o}{=} \PY{n}{delete\PYZus{}inf}\PY{p}{(}\PY{n}{Counter}\PY{p}{(}\PY{n}{sect}\PY{p}{)}\PY{p}{)}
+                     \PY{n}{jump\PYZus{}status} \PY{o}{=} \PY{n}{jump\PYZus{}rate}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{の跳躍情報　跳躍の割合:}\PY{l+s+si}{\PYZob{}:.2\PYZcb{}}\PY{l+s+s2}{,上行跳躍の割合:}\PY{l+s+si}{\PYZob{}:.2\PYZcb{}}\PY{l+s+s2}{,下行跳躍の割合:}\PY{l+s+si}{\PYZob{}:.2\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]}\PY{p}{,}\PY{n}{jump\PYZus{}status}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{jump\PYZus{}status}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{jump\PYZus{}status}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+         
+             \PY{c+c1}{\PYZsh{}音域（何半音ぶんか）を表示}
+             \PY{k}{def} \PY{n+nf}{caluculate\PYZus{}pitch\PYZus{}range}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{status} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                 \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{sect} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sections}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{status} \PY{o}{=} \PY{n}{pitch\PYZus{}range}\PY{p}{(}\PY{n}{sect}\PY{p}{)}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s2}{の音域情報　最低音:}\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s2}{,最高音:}\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+s2}{,音域:}\PY{l+s+si}{\PYZob{}3\PYZcb{}}\PY{l+s+s2}{半音(}\PY{l+s+si}{\PYZob{}4\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}5\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]}\PY{p}{,}\PY{n}{notenum2pitch}\PY{p}{(}\PY{n}{status}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{n}{notenum2pitch}\PY{p}{(}\PY{n}{status}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{n}{status}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}\PY{n}{status}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{status}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                     
+             \PY{c+c1}{\PYZsh{}音価の難易度（藤井）の表示}
+             \PY{k}{def} \PY{n+nf}{caluculate\PYZus{}duration\PYZus{}difficulty}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{sect} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sections}\PY{p}{)}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{}print(sect)}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{の音価難易度}\PY{l+s+si}{\PYZob{}:.3\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]}\PY{p}{,}\PY{n}{rhythm\PYZus{}difficulty}\PY{p}{(}\PY{n}{sect}\PY{o}{.}\PY{n}{flat}\PY{o}{.}\PY{n}{notes}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                     
+             \PY{c+c1}{\PYZsh{}タイの数}
+             \PY{k}{def} \PY{n+nf}{count\PYZus{}tie}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{sect} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sections}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{tie\PYZus{}count} \PY{o}{=} \PY{l+m+mi}{0}
+                     \PY{k}{for} \PY{n}{note} \PY{o+ow}{in} \PY{n}{sect}\PY{o}{.}\PY{n}{flat}\PY{o}{.}\PY{n}{notes}\PY{p}{:}
+                         \PY{c+c1}{\PYZsh{}print(note)}
+                         \PY{k}{if} \PY{n}{note}\PY{o}{.}\PY{n}{tie}\PY{p}{:}
+                             \PY{k}{if} \PY{n}{note}\PY{o}{.}\PY{n}{tie}\PY{o}{.}\PY{n}{type} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{start}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                                 \PY{n}{tie\PYZus{}count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                             
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{のタイの数}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]}\PY{p}{,}\PY{n}{tie\PYZus{}count}\PY{p}{)}\PY{p}{)}
+                     
+                     \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{            for note in sect.flat.notes:}
+         \PY{l+s+sd}{                print(note.duration.quarterLength)}
+         \PY{l+s+sd}{            \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{c+c1}{\PYZsh{}音程の向きの変化}
+             \PY{k}{def} \PY{n+nf}{count\PYZus{}direction}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{sect} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sections}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{direction\PYZus{}change\PYZus{}count} \PY{o}{=} \PY{n}{count\PYZus{}melody\PYZus{}direction}\PY{p}{(}\PY{n}{sect}\PY{p}{)}
+                     
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{の旋律方向変化の数}\PY{l+s+si}{\PYZob{}:.3\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]}\PY{p}{,}\PY{n}{direction\PYZus{}change\PYZus{}count}\PY{p}{)}\PY{p}{)} 
+             
+             \PY{c+c1}{\PYZsh{}ピッチエントロピー}
+             \PY{k}{def} \PY{n+nf}{pitch\PYZus{}entropy}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{sect} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{notes}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{a} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                     \PY{k}{for} \PY{n}{note} \PY{o+ow}{in} \PY{n}{sect}\PY{p}{:}
+                         \PY{n}{a}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{note}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{pe} \PY{o}{=} \PY{n}{caluculate\PYZus{}entropy}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                     
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{のピッチエントロピー}\PY{l+s+si}{\PYZob{}:.3\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]}\PY{p}{,}\PY{n}{pe}\PY{p}{)}\PY{p}{)} 
+             
+             \PY{c+c1}{\PYZsh{}音価エントロピー}
+             \PY{k}{def} \PY{n+nf}{duration\PYZus{}entropy}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{sect} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{notes}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{a} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                     \PY{k}{for} \PY{n}{note} \PY{o+ow}{in} \PY{n}{sect}\PY{p}{:}
+                         \PY{n}{a}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{note}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{de} \PY{o}{=} \PY{n}{caluculate\PYZus{}entropy}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                     
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{の音価エントロピー}\PY{l+s+si}{\PYZob{}:.3\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{analysis\PYZus{}section}\PY{p}{[}\PY{n}{num}\PY{p}{]}\PY{p}{,}\PY{n}{de}\PY{p}{)}\PY{p}{)} 
+                     
+             \PY{c+c1}{\PYZsh{}音高の平均}
+             \PY{k}{def} 
+                 
+             \PY{err}{\PYZdq{}}\PY{err}{\PYZdq{}}\PY{err}{\PYZdq{}}\PY{err}{ }\PY{err}{ }\PY{err}{ }\PY{err}{ }\PY{err}{ }\PY{err}{ }\PY{err}{ }
+             \PY{c+c1}{\PYZsh{}音域の集計（重み付き）}
+             \PY{k}{def} \PY{n+nf}{caluculate\PYZus{}wpcs}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,}\PY{n}{w1}\PY{p}{,}\PY{n}{w2}\PY{p}{,}\PY{n}{w3}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{status} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                 \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{sect} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sections}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{a} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                     \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{sect}\PY{o}{.}\PY{n}{flat}\PY{o}{.}\PY{n}{notes}\PY{p}{:}
+                         \PY{n}{a}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{o}{.}\PY{n}{pitch}\PY{o}{.}\PY{n}{ps}\PY{p}{)}
+                     \PY{n}{dic} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                 
+                     \PY{n}{status}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{weighted\PYZus{}pitch\PYZus{}count\PYZus{}sum}\PY{p}{(}\PY{n}{a}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{1.25}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{)}
+             \PY{l+s+s2}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+s2}{        }
+         \PY{l+s+s2}{    }
+\end{Verbatim}
+
+
+    \hypertarget{ux5b9fux969bux306b6ux66f2ux5206ux5206ux6790ux3057ux3066ux307fux308b}{%
+\subsection{実際に6曲分、分析してみる}\label{ux5b9fux969bux306b6ux66f2ux5206ux5206ux6790ux3057ux3066ux307fux308b}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{n}{analysis\PYZus{}corpus} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{cherry} \PY{o}{=} \PY{n}{gakuhu\PYZus{}object}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Cherry}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cherry.xml}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{24}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{konayuki} \PY{o}{=} \PY{n}{gakuhu\PYZus{}object}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Konayuki}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{konayuki.mxl}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{26}\PY{p}{,}\PY{l+m+mi}{27}\PY{p}{,}\PY{l+m+mi}{37}\PY{p}{,}\PY{l+m+mi}{37}\PY{p}{,}\PY{l+m+mi}{45}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{ultra} \PY{o}{=} \PY{n}{gakuhu\PYZus{}object}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ultra soul}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ultrasoul.mxl}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{17}\PY{p}{,}\PY{l+m+mi}{24}\PY{p}{,}\PY{l+m+mi}{25}\PY{p}{,}\PY{l+m+mi}{28}\PY{p}{,}\PY{l+m+mi}{29}\PY{p}{,}\PY{l+m+mi}{39}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{koi} \PY{o}{=} \PY{n}{gakuhu\PYZus{}object}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Koi}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{koi1.mxl}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{24}\PY{p}{,}\PY{l+m+mi}{25}\PY{p}{,}\PY{l+m+mi}{32}\PY{p}{,}\PY{l+m+mi}{33}\PY{p}{,}\PY{l+m+mi}{50}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{zenzen} \PY{o}{=} \PY{n}{gakuhu\PYZus{}object}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ZenZenZense}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{zenzenzense.mxl}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{35}\PY{p}{,}\PY{l+m+mi}{37}\PY{p}{,}\PY{l+m+mi}{53}\PY{p}{,}\PY{l+m+mi}{54}\PY{p}{,}\PY{l+m+mi}{73}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{tentai} \PY{o}{=} \PY{n}{gakuhu\PYZus{}object}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tentaikansoku}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tentaikansoku.mxl}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{18}\PY{p}{,}\PY{l+m+mi}{34}\PY{p}{,}\PY{l+m+mi}{35}\PY{p}{,}\PY{l+m+mi}{42}\PY{p}{,}\PY{l+m+mi}{43}\PY{p}{,}\PY{l+m+mi}{59}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{lemon} \PY{o}{=} \PY{n}{gakuhu\PYZus{}object}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Lemon}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{lemon.mxl}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{17}\PY{p}{,}\PY{l+m+mi}{21}\PY{p}{,}\PY{l+m+mi}{21}\PY{p}{,}\PY{l+m+mi}{31}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{chiikoi} \PY{o}{=} \PY{n}{gakuhu\PYZus{}object}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ChiisanaKoinoUta}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{chiisanakoinouta.mxl}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{33}\PY{p}{,}\PY{l+m+mi}{34}\PY{p}{,}\PY{l+m+mi}{44}\PY{p}{,}\PY{l+m+mi}{45}\PY{p}{,}\PY{l+m+mi}{76}\PY{p}{]}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{12}\PY{p}{)}
+         \PY{n}{sekai} \PY{o}{=} \PY{n}{gakuhu\PYZus{}object}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SekaiNiHitosudakeNoHana}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sekai.mxl}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{17}\PY{p}{,}\PY{l+m+mi}{18}\PY{p}{,}\PY{l+m+mi}{25}\PY{p}{,}\PY{l+m+mi}{26}\PY{p}{,}\PY{l+m+mi}{34}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{kiseki} \PY{o}{=} \PY{n}{gakuhu\PYZus{}object}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Kiseki}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{kiseki.mxl}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{17}\PY{p}{,}\PY{l+m+mi}{18}\PY{p}{,}\PY{l+m+mi}{25}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<music21.stream.Part トラック 0>
+<music21.stream.Part Lead>
+<music21.stream.Part ももこ>
+<music21.stream.Part トラック 0>
+<music21.stream.Part Flute>
+<music21.stream.Part Vocal>
+<music21.stream.Part Vocal>
+<music21.stream.Part ハーモニカ1>
+<music21.stream.Part ピアノ>
+<music21.stream.Part Tenor>
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{k}{def} \PY{n+nf}{weighted\PYZus{}pitch\PYZus{}range}\PY{p}{(}\PY{n}{length\PYZus{}dict}\PY{p}{)}\PY{p}{:}
+             \PY{n}{wpcss} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{lengths} \PY{o+ow}{in} \PY{n}{length\PYZus{}dict}\PY{p}{:}
+                 \PY{n}{wpcs} \PY{o}{=} \PY{l+m+mf}{0.0}
+                 \PY{n}{length\PYZus{}sum} \PY{o}{=} \PY{l+m+mf}{0.0}
+                 \PY{k}{for} \PY{n}{note\PYZus{}num} \PY{o+ow}{in} \PY{n}{lengths}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{length\PYZus{}sum} \PY{o}{+}\PY{o}{=} \PY{n}{lengths}\PY{p}{[}\PY{n}{note\PYZus{}num}\PY{p}{]}
+                     \PY{k}{if} \PY{n}{note\PYZus{}num} \PY{o}{\PYZgt{}} \PY{l+m+mi}{10000}\PY{p}{:}
+                         \PY{k}{pass}
+                     \PY{k}{else}\PY{p}{:}
+                         \PY{n}{wpcs} \PY{o}{+}\PY{o}{=} \PY{n}{lengths}\PY{p}{[}\PY{n}{note\PYZus{}num}\PY{p}{]} \PY{o}{*} \PY{n}{weighted\PYZus{}pitch}\PY{p}{(}\PY{n}{note\PYZus{}num}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{l+m+mi}{55}\PY{p}{,}\PY{l+m+mi}{67}\PY{p}{)}
+                 \PY{n}{wpcss}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{wpcs}\PY{o}{/}\PY{n}{length\PYZus{}sum}\PY{p}{)}
+             \PY{k}{return} \PY{n}{wpcss}
+\end{Verbatim}
+
+
+    test\_a = test.measures(1,1) test\_b = test.measures(2,2) test\_c =
+test.measures(3,3) test\_d = test.measures(4,4) test\_d.show()
+
+print(rhythm\_difficulty(test\_d.flat.notes)) print(test\_d.flat.notes)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{k}{for} \PY{n}{sheets} \PY{o+ow}{in} \PY{n}{analysis\PYZus{}corpus}\PY{p}{:}
+             \PY{n}{sheets}\PY{o}{.}\PY{n}{show\PYZus{}key}\PY{p}{(}\PY{p}{)}
+             \PY{n}{sheets}\PY{o}{.}\PY{n}{counting\PYZus{}pitch}\PY{p}{(}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+             \PY{n}{sheets}\PY{o}{.}\PY{n}{counting\PYZus{}duration}\PY{p}{(}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+             
+             \PY{n}{sheets}\PY{o}{.}\PY{n}{plot\PYZus{}pitch\PYZus{}diff}\PY{p}{(}\PY{p}{)}
+            
+             \PY{n}{sheets}\PY{o}{.}\PY{n}{calucurate\PYZus{}jump}\PY{p}{(}\PY{p}{)}
+             \PY{n}{sheets}\PY{o}{.}\PY{n}{caluculate\PYZus{}pitch\PYZus{}range}\PY{p}{(}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{sheets}\PY{o}{.}\PY{n}{name}\PY{p}{)}
+             \PY{n}{sheets}\PY{o}{.}\PY{n}{caluculate\PYZus{}duration\PYZus{}difficulty}\PY{p}{(}\PY{p}{)}
+             \PY{n}{sheets}\PY{o}{.}\PY{n}{count\PYZus{}tie}\PY{p}{(}\PY{p}{)}
+             \PY{n}{sheets}\PY{o}{.}\PY{n}{count\PYZus{}direction}\PY{p}{(}\PY{p}{)}
+             \PY{n}{sheets}\PY{o}{.}\PY{n}{pitch\PYZus{}entropy}\PY{p}{(}\PY{p}{)}
+             \PY{n}{sheets}\PY{o}{.}\PY{n}{duration\PYZus{}entropy}\PY{p}{(}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}print(\PYZdq{}=====wpcs=====\PYZbs{}nAmelody\PYZob{}:.3\PYZcb{},Bmelody\PYZob{}:.3\PYZcb{},Sabi\PYZob{}:.3\PYZcb{}\PYZdq{}.format(wpcss[0],wpcss[1],wpcss[2]))}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+------------Cherry-------------
+-------A melodyの統計情報---------
+調:d minor
+-------B melodyの統計情報---------
+調:a minor
+-------Sabiの統計情報---------
+調:C major
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_7.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_8.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_9.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_10.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_11.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_12.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+A melodyの跳躍情報　跳躍の割合:0.14,上行跳躍の割合:0.081,下行跳躍の割合:0.054
+B melodyの跳躍情報　跳躍の割合:0.14,上行跳躍の割合:0.028,下行跳躍の割合:0.11
+Sabiの跳躍情報　跳躍の割合:0.24,上行跳躍の割合:0.2,下行跳躍の割合:0.044
+A melodyの音域情報　最低音:E3,最高音:G4,音域:15半音(52-67)
+B melodyの音域情報　最低音:E3,最高音:F4,音域:13半音(52-65)
+Sabiの音域情報　最低音:C4,最高音:A4,音域:9半音(60-69)
+Cherry
+A melodyの音価難易度5.78
+B melodyの音価難易度6.15
+Sabiの音価難易度6.37
+A melodyのタイの数4
+B melodyのタイの数4
+Sabiのタイの数4
+A melodyの旋律方向変化の数0.116
+B melodyの旋律方向変化の数0.163
+Sabiの旋律方向変化の数0.146
+A melodyのピッチエントロピー2.04
+B melodyのピッチエントロピー2.06
+Sabiのピッチエントロピー1.65
+A melodyの音価エントロピー1.12
+B melodyの音価エントロピー1.08
+Sabiの音価エントロピー1.53
+------------Konayuki-------------
+-------A melodyの統計情報---------
+調:D major
+-------B melodyの統計情報---------
+調:D major
+-------Sabiの統計情報---------
+調:D major
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_14.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_15.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_16.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_17.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_18.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_19.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_20.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_21.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_22.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_23.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_24.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_25.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+A melodyの跳躍情報　跳躍の割合:0.12,上行跳躍の割合:0.061,下行跳躍の割合:0.061
+B melodyの跳躍情報　跳躍の割合:0.22,上行跳躍の割合:0.1,下行跳躍の割合:0.12
+Sabiの跳躍情報　跳躍の割合:0.24,上行跳躍の割合:0.15,下行跳躍の割合:0.087
+A melodyの音域情報　最低音:D3,最高音:B3,音域:9半音(50-59)
+B melodyの音域情報　最低音:B2,最高音:A4,音域:22半音(47-69)
+Sabiの音域情報　最低音:B3,最高音:A4,音域:10半音(59-69)
+Konayuki
+A melodyの音価難易度6.95
+B melodyの音価難易度6.68
+Sabiの音価難易度6.4
+A melodyのタイの数28
+B melodyのタイの数7
+Sabiのタイの数18
+A melodyの旋律方向変化の数0.227
+B melodyの旋律方向変化の数0.206
+Sabiの旋律方向変化の数0.0769
+A melodyのピッチエントロピー1.75
+B melodyのピッチエントロピー2.2
+Sabiのピッチエントロピー1.96
+A melodyの音価エントロピー1.51
+B melodyの音価エントロピー1.13
+Sabiの音価エントロピー1.68
+------------Ultra soul-------------
+-------A melodyの統計情報---------
+調:g\# minor
+-------B melodyの統計情報---------
+調:g\# minor
+-------Sabiの統計情報---------
+調:c\# minor
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_27.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_28.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_29.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_30.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_31.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_32.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_33.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_34.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_35.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_36.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_37.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_38.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+A melodyの跳躍情報　跳躍の割合:0.24,上行跳躍の割合:0.16,下行跳躍の割合:0.08
+B melodyの跳躍情報　跳躍の割合:0.43,上行跳躍の割合:0.24,下行跳躍の割合:0.19
+Sabiの跳躍情報　跳躍の割合:0.31,上行跳躍の割合:0.16,下行跳躍の割合:0.16
+A melodyの音域情報　最低音:F\#3,最高音:E4,音域:10半音(54-64)
+B melodyの音域情報　最低音:F\#3,最高音:A4,音域:15半音(54-69)
+Sabiの音域情報　最低音:C4,最高音:C\#5,音域:13半音(60-73)
+Ultra soul
+A melodyの音価難易度4.02
+B melodyの音価難易度4.33
+Sabiの音価難易度5.42
+A melodyのタイの数4
+B melodyのタイの数0
+Sabiのタイの数2
+A melodyの旋律方向変化の数0.25
+B melodyの旋律方向変化の数0.478
+Sabiの旋律方向変化の数0.349
+A melodyのピッチエントロピー1.75
+B melodyのピッチエントロピー2.13
+Sabiのピッチエントロピー2.09
+A melodyの音価エントロピー1.07
+B melodyの音価エントロピー0.333
+Sabiの音価エントロピー1.06
+------------Koi-------------
+-------A melodyの統計情報---------
+調:A major
+-------B melodyの統計情報---------
+調:A major
+-------Sabiの統計情報---------
+調:A major
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_40.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_41.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_42.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_43.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_44.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_45.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_46.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_47.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_48.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_49.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_50.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_51.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+A melodyの跳躍情報　跳躍の割合:0.26,上行跳躍の割合:0.065,下行跳躍の割合:0.19
+B melodyの跳躍情報　跳躍の割合:0.52,上行跳躍の割合:0.26,下行跳躍の割合:0.26
+Sabiの跳躍情報　跳躍の割合:0.45,上行跳躍の割合:0.2,下行跳躍の割合:0.25
+A melodyの音域情報　最低音:E3,最高音:F\#4,音域:14半音(52-66)
+B melodyの音域情報　最低音:E3,最高音:E4,音域:12半音(52-64)
+Sabiの音域情報　最低音:F\#3,最高音:A4,音域:15半音(54-69)
+Koi
+A melodyの音価難易度4.33
+B melodyの音価難易度4.22
+Sabiの音価難易度4.33
+A melodyのタイの数4
+B melodyのタイの数3
+Sabiのタイの数6
+A melodyの旋律方向変化の数0.355
+B melodyの旋律方向変化の数0.528
+Sabiの旋律方向変化の数0.396
+A melodyのピッチエントロピー1.93
+B melodyのピッチエントロピー1.71
+Sabiのピッチエントロピー1.92
+A melodyの音価エントロピー0.708
+B melodyの音価エントロピー0.688
+Sabiの音価エントロピー0.716
+------------ZenZenZense-------------
+-------A melodyの統計情報---------
+調:B major
+-------B melodyの統計情報---------
+調:F\# major
+-------Sabiの統計情報---------
+調:B major
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_53.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_54.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_55.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_56.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_57.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_58.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_59.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_60.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_61.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_62.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_63.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_64.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+A melodyの跳躍情報　跳躍の割合:0.067,上行跳躍の割合:0.05,下行跳躍の割合:0.017
+B melodyの跳躍情報　跳躍の割合:0.32,上行跳躍の割合:0.095,下行跳躍の割合:0.22
+Sabiの跳躍情報　跳躍の割合:0.16,上行跳躍の割合:0.081,下行跳躍の割合:0.081
+A melodyの音域情報　最低音:F\#4,最高音:E5,音域:10半音(66-76)
+B melodyの音域情報　最低音:G\#4,最高音:F\#5,音域:10半音(68-78)
+Sabiの音域情報　最低音:G\#4,最高音:F\#5,音域:10半音(68-78)
+ZenZenZense
+A melodyの音価難易度5.04
+B melodyの音価難易度3.46
+Sabiの音価難易度4.33
+A melodyのタイの数6
+B melodyのタイの数7
+Sabiのタイの数11
+A melodyの旋律方向変化の数0.203
+B melodyの旋律方向変化の数0.478
+Sabiの旋律方向変化の数0.135
+A melodyのピッチエントロピー1.64
+B melodyのピッチエントロピー1.67
+Sabiのピッチエントロピー1.43
+A melodyの音価エントロピー1.49
+B melodyの音価エントロピー1.08
+Sabiの音価エントロピー0.847
+------------tentaikansoku-------------
+-------A melodyの統計情報---------
+調:f\# minor
+-------B melodyの統計情報---------
+調:D major
+-------Sabiの統計情報---------
+調:A major
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_66.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_67.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_68.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_69.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_70.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_71.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_72.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_73.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_74.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_75.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_76.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_77.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+A melodyの跳躍情報　跳躍の割合:0.23,上行跳躍の割合:0.083,下行跳躍の割合:0.15
+B melodyの跳躍情報　跳躍の割合:0.47,上行跳躍の割合:0.31,下行跳躍の割合:0.16
+Sabiの跳躍情報　跳躍の割合:0.21,上行跳躍の割合:0.09,下行跳躍の割合:0.12
+A melodyの音域情報　最低音:A3,最高音:B4,音域:14半音(57-71)
+B melodyの音域情報　最低音:D4,最高音:E5,音域:14半音(62-76)
+Sabiの音域情報　最低音:A4,最高音:A5,音域:12半音(69-81)
+tentaikansoku
+A melodyの音価難易度5.05
+B melodyの音価難易度4.8
+Sabiの音価難易度4.33
+A melodyのタイの数7
+B melodyのタイの数2
+Sabiのタイの数9
+A melodyの旋律方向変化の数0.295
+B melodyの旋律方向変化の数0.622
+Sabiの旋律方向変化の数0.271
+A melodyのピッチエントロピー1.77
+B melodyのピッチエントロピー2.15
+Sabiのピッチエントロピー1.83
+A melodyの音価エントロピー1.05
+B melodyの音価エントロピー0.854
+Sabiの音価エントロピー0.908
+------------Lemon-------------
+-------A melodyの統計情報---------
+調:B major
+-------B melodyの統計情報---------
+調:B major
+-------Sabiの統計情報---------
+調:B major
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_79.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_80.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_81.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_82.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_83.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_84.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_85.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_86.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_87.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_88.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_89.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_90.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+A melodyの跳躍情報　跳躍の割合:0.49,上行跳躍の割合:0.21,下行跳躍の割合:0.28
+B melodyの跳躍情報　跳躍の割合:0.093,上行跳躍の割合:0.047,下行跳躍の割合:0.047
+Sabiの跳躍情報　跳躍の割合:0.33,上行跳躍の割合:0.15,下行跳躍の割合:0.18
+A melodyの音域情報　最低音:B2,最高音:D\#4,音域:16半音(47-63)
+B melodyの音域情報　最低音:D\#3,最高音:E4,音域:13半音(51-64)
+Sabiの音域情報　最低音:D\#3,最高音:B4,音域:20半音(51-71)
+Lemon
+A melodyの音価難易度7.36
+B melodyの音価難易度6.53
+Sabiの音価難易度5.12
+A melodyのタイの数14
+B melodyのタイの数4
+Sabiのタイの数18
+A melodyの旋律方向変化の数0.318
+B melodyの旋律方向変化の数0.267
+Sabiの旋律方向変化の数0.195
+A melodyのピッチエントロピー2.34
+B melodyのピッチエントロピー1.93
+Sabiのピッチエントロピー2.17
+A melodyの音価エントロピー1.96
+B melodyの音価エントロピー1.89
+Sabiの音価エントロピー1.65
+------------ChiisanaKoinoUta-------------
+-------A melodyの統計情報---------
+調:B major
+-------B melodyの統計情報---------
+調:B major
+-------Sabiの統計情報---------
+調:B major
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_92.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_93.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_94.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_95.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_96.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_97.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_98.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_99.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_100.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_101.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_102.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_103.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+A melodyの跳躍情報　跳躍の割合:0.15,上行跳躍の割合:0.15,下行跳躍の割合:0.0
+B melodyの跳躍情報　跳躍の割合:0.11,上行跳躍の割合:0.071,下行跳躍の割合:0.036
+Sabiの跳躍情報　跳躍の割合:0.24,上行跳躍の割合:0.12,下行跳躍の割合:0.11
+A melodyの音域情報　最低音:B3,最高音:G\#4,音域:9半音(59-68)
+B melodyの音域情報　最低音:A\#3,最高音:C\#5,音域:15半音(58-73)
+Sabiの音域情報　最低音:F\#4,最高音:A\#5,音域:16半音(66-82)
+ChiisanaKoinoUta
+A melodyの音価難易度6.76
+B melodyの音価難易度6.32
+Sabiの音価難易度4.86
+A melodyのタイの数8
+B melodyのタイの数6
+Sabiのタイの数10
+A melodyの旋律方向変化の数0.276
+B melodyの旋律方向変化の数0.105
+Sabiの旋律方向変化の数0.226
+A melodyのピッチエントロピー1.87
+B melodyのピッチエントロピー2.17
+Sabiのピッチエントロピー1.94
+A melodyの音価エントロピー0.367
+B melodyの音価エントロピー0.753
+Sabiの音価エントロピー1.03
+------------SekaiNiHitosudakeNoHana-------------
+-------A melodyの統計情報---------
+調:A major
+-------B melodyの統計情報---------
+調:b minor
+-------Sabiの統計情報---------
+調:A major
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_105.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_106.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_107.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_108.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_109.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_110.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_111.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_112.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_113.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_114.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_115.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_116.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+A melodyの跳躍情報　跳躍の割合:0.14,上行跳躍の割合:0.11,下行跳躍の割合:0.023
+B melodyの跳躍情報　跳躍の割合:0.039,上行跳躍の割合:0.02,下行跳躍の割合:0.02
+Sabiの跳躍情報　跳躍の割合:0.089,上行跳躍の割合:0.089,下行跳躍の割合:0.0
+A melodyの音域情報　最低音:E3,最高音:E4,音域:12半音(52-64)
+B melodyの音域情報　最低音:A3,最高音:F\#4,音域:9半音(57-66)
+Sabiの音域情報　最低音:F\#3,最高音:E4,音域:10半音(54-64)
+SekaiNiHitosudakeNoHana
+A melodyの音価難易度7.2
+B melodyの音価難易度6.22
+Sabiの音価難易度7.24
+A melodyのタイの数23
+B melodyのタイの数7
+Sabiのタイの数12
+A melodyの旋律方向変化の数0.0513
+B melodyの旋律方向変化の数0.0333
+Sabiの旋律方向変化の数0.103
+A melodyのピッチエントロピー1.69
+B melodyのピッチエントロピー1.36
+Sabiのピッチエントロピー1.6
+A melodyの音価エントロピー1.27
+B melodyの音価エントロピー1.29
+Sabiの音価エントロピー1.3
+------------Kiseki-------------
+-------A melodyの統計情報---------
+調:e minor
+-------B melodyの統計情報---------
+調:C major
+-------Sabiの統計情報---------
+調:C major
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_118.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_119.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_120.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_121.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_122.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_123.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_124.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_125.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_126.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_127.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_128.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_129.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+A melodyの跳躍情報　跳躍の割合:0.26,上行跳躍の割合:0.14,下行跳躍の割合:0.12
+B melodyの跳躍情報　跳躍の割合:0.23,上行跳躍の割合:0.12,下行跳躍の割合:0.11
+Sabiの跳躍情報　跳躍の割合:0.26,上行跳躍の割合:0.14,下行跳躍の割合:0.12
+A melodyの音域情報　最低音:G3,最高音:G\#4,音域:13半音(55-68)
+B melodyの音域情報　最低音:G3,最高音:A\#4,音域:15半音(55-70)
+Sabiの音域情報　最低音:G3,最高音:A4,音域:14半音(55-69)
+Kiseki
+A melodyの音価難易度6.59
+B melodyの音価難易度6.71
+Sabiの音価難易度6.4
+A melodyのタイの数2
+B melodyのタイの数4
+Sabiのタイの数4
+A melodyの旋律方向変化の数0.279
+B melodyの旋律方向変化の数0.241
+Sabiの旋律方向変化の数0.287
+A melodyのピッチエントロピー1.75
+B melodyのピッチエントロピー2.05
+Sabiのピッチエントロピー1.91
+A melodyの音価エントロピー0.755
+B melodyの音価エントロピー1.13
+Sabiの音価エントロピー0.99
+
+    \end{Verbatim}
+
+    \hypertarget{ux6b4cux5531ux5b9fux9a13ux30a2ux30f3ux30b1ux30fcux30c8}{%
+\subsubsection{歌唱実験アンケート}\label{ux6b4cux5531ux5b9fux9a13ux30a2ux30f3ux30b1ux30fcux30c8}}
+
+\begin{itemize}
+\tightlist
+\item
+  CSVデータの出力
+\item
+  セクションごとの主観難易度
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} \PY{n}{difficulty} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{メロディが複雑で正確に音程を取りづらい}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{音の飛びが激しく音程がとれない}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{音域が広い}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{テンポが速い}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{リズムが複雑でわかりにくい}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{16分音符などが多くてリズムが細かい}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{英語の歌詞}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{シャウトやビブラートなど特殊奏法}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{other}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{9}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{nan}\PY{p}{:}\PY{l+m+mi}{100}\PY{p}{\PYZcb{}}
+         
+         \PY{k}{def} \PY{n+nf}{difficulty\PYZus{}to\PYZus{}tag}\PY{p}{(}\PY{n}{string}\PY{p}{,}\PY{n}{dic}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n+nb}{type}\PY{p}{(}\PY{n}{string}\PY{p}{)} \PY{o}{==} \PY{n+nb}{float}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{nannan}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}難易度の理由が複数コンマとスペース区切りで入力}
+                 \PY{n}{array} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                 \PY{c+c1}{\PYZsh{}解析可能な形のリストに区切る}
+                 \PY{n}{words} \PY{o}{=} \PY{n}{string}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}  
+                 \PY{k}{for} \PY{n}{word} \PY{o+ow}{in} \PY{n}{words}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{n}{word}\PY{p}{)}
+                     \PY{k}{if} \PY{n}{word} \PY{o+ow}{in} \PY{n}{difficulty}\PY{p}{:}
+                         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ireruyo\PYZhy{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{word}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                         \PY{n}{array}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{difficulty}\PY{p}{[}\PY{n}{word}\PY{p}{]}\PY{p}{)}
+                         \PY{n}{dic}\PY{p}{[}\PY{n}{difficulty}\PY{p}{[}\PY{n}{word}\PY{p}{]}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                     \PY{k}{else}\PY{p}{:}
+                         \PY{n}{array}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{difficulty}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{other}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+                         \PY{n}{dic}\PY{p}{[}\PY{l+m+mi}{9}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{n}{array}\PY{p}{)}
+                 \PY{k}{return} \PY{n}{array}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{c+c1}{\PYZsh{}共起のカウント}
+         \PY{k}{def} \PY{n+nf}{tessa}\PY{p}{(}\PY{n}{source}\PY{p}{)}\PY{p}{:}
+             \PY{n}{result} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{p1} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{source}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{p2} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{p1}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{source}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{result}\PY{o}{.}\PY{n}{append}\PY{p}{(} \PY{p}{(}\PY{n}{source}\PY{p}{[}\PY{n}{p1}\PY{p}{]}\PY{p}{,}\PY{n}{source}\PY{p}{[}\PY{n}{p2}\PY{p}{]}\PY{p}{)} \PY{p}{)}
+                     
+             \PY{k}{return} \PY{n}{result}
+\end{Verbatim}
+
+
+    
+
+    
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{n}{df}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}42}]:}     time\_stamp  age sex  singing\_competence                           song  \textbackslash{}
+         0            1   23  男性                   3                           チェリー   
+         1            1   23  男性                   3                        TSUNAMI   
+         2            1   23  男性                   3                          紅蓮の弓矢   
+         3            1   23  男性                   3                           浪漫飛行   
+         4            1   23  男性                   3                            アポロ   
+         5            1   23  男性                   3                             粉雪   
+         6            2   21  男性                   3                           チェリー   
+         7            2   21  男性                   3                        TSUNAMI   
+         8            2   21  男性                   3                          紅蓮の弓矢   
+         9            2   21  男性                   3                           浪漫飛行   
+         10           2   21  男性                   3                            アポロ   
+         11           2   21  男性                   3                             粉雪   
+         12           1   23  男性                   3                  アイネクライネ(米津玄師)   
+         13           1   23  男性                   3                      晴れ舞台(ジェロ)   
+         14           2   21  男性                   3                        オレンジレンジ   
+         15           2   21  男性                   3                           米津玄師   
+         16           3   21  男性                   3                           チェリー   
+         17           3   21  男性                   3                        TSUNAMI   
+         18           3   21  男性                   3                          紅蓮の弓矢   
+         19           3   21  男性                   3                           浪漫飛行   
+         20           3   21  男性                   3                            アポロ   
+         21           3   21  男性                   3                             粉雪   
+         22           3   21  男性                   3          浮世CROSSING(UVERworld)   
+         23           3   21  男性                   3                    LOSER(米津玄師)   
+         24           4   24  男性                   4                           チェリー   
+         25           4   24  男性                   4                        TSUNAMI   
+         26           4   24  男性                   4                          紅蓮の弓矢   
+         27           4   24  男性                   4                           浪漫飛行   
+         28           4   24  男性                   4                            アポロ   
+         29           4   24  男性                   4                             粉雪   
+         30           4   24  男性                   4                BUMP OF CHICKEN   
+         31           5   24  男性                   2                           チェリー   
+         32           5   24  男性                   2                        TSUNAMI   
+         33           5   24  男性                   2                             粉雪   
+         34           5   24  男性                   2                           浪漫飛行   
+         35           5   24  男性                   2                    ホウキ雲 RYTHEM   
+         36           5   24  男性                   2            マスターピース mihimaru GT   
+         37           6   24  男性                   2                           チェリー   
+         38           6   24  男性                   2                            アポロ   
+         39           6   24  男性                   2                             粉雪   
+         40           6   24  男性                   2             小さな恋のうた(MONGOL800)   
+         41           6   24  男性                   2  sailing day (BUMP OF CHICKEN)   
+         42           6   24  男性                   2              月灯りの下で(MONGOL800)   
+         
+             amero\_difficulty   amero\_reason  amero\_reason\_free  bmero\_difficulty  \textbackslash{}
+         0                  2              9                NaN                 1   
+         1                  1              9                NaN                 1   
+         2                  2              9                NaN                 3   
+         3                  3              0                NaN                 2   
+         4                  1           3, 9                NaN                 3   
+         5                  1              9                NaN                 1   
+         6                  1              6                NaN                 1   
+         7                  2           1, 9                NaN                 2   
+         8                  2        4, 7, 9                NaN                 3   
+         9                  3           0, 2                NaN                 4   
+         10                 2           2, 3                NaN                 2   
+         11                 1              9                NaN                 2   
+         12                 4           6, 9                NaN                 2   
+         13                 4        0, 8, 9                NaN                 4   
+         14                 4  0, 1, 4, 5, 9                NaN                 2   
+         15                 4  0, 3, 5, 6, 9                NaN                 1   
+         16                 2              0                NaN                 2   
+         17                 3              0                NaN                 3   
+         18                 2           1, 3                NaN                 4   
+         19                 3           1, 9                NaN                 3   
+         20                 3        1, 3, 4                NaN                 3   
+         21                 1              9                NaN                 2   
+         22                 4     1, 3, 4, 5                NaN                 2   
+         23                 4     0, 3, 4, 5                NaN                 3   
+         24                 1              9                NaN                 1   
+         25                 3              0                NaN                 3   
+         26                 4        0, 1, 4                NaN                 2   
+         27                 1           None                NaN                 1   
+         28                 3           0, 6                NaN                 3   
+         29                 2           None                NaN                 2   
+         30                 3           0, 4                NaN                 3   
+         31                 3              3                NaN                 3   
+         32                 2           None                NaN                 3   
+         33                 3        3, 4, 5                NaN                 4   
+         34                 4        0, 4, 5                NaN                 4   
+         35                 3           0, 4                NaN                 2   
+         36                 4           2, 5                NaN                 4   
+         37                 2           None                NaN                 3   
+         38                 2           None                NaN                 3   
+         39                 3              9                NaN                 3   
+         40                 1           None                NaN                 2   
+         41                 3     0, 1, 4, 5                NaN                 3   
+         42                 3        0, 1, 4                NaN                 2   
+         
+            bmero\_reason  bmero\_reason\_free  sabi\_difficulty          sabi\_reason  \textbackslash{}
+         0             0                NaN                3                    0   
+         1             9                NaN                2                    9   
+         2             6                NaN                3                    4   
+         3             0                NaN                3                    1   
+         4             6                NaN                4                 6, 9   
+         5             9                NaN                3                    2   
+         6          6, 9                NaN                1                    2   
+         7          1, 9                NaN                1                    2   
+         8       1, 3, 9                NaN                1                    3   
+         9          0, 9                NaN                2                    6   
+         10      0, 3, 5                NaN                1                 2, 3   
+         11            9                NaN                3                 2, 9   
+         12            9                NaN                3              1, 4, 9   
+         13            8                NaN                4                    8   
+         14      0, 4, 5                NaN                3              4, 5, 8   
+         15         3, 6                NaN                4              3, 4, 6   
+         16            0                NaN                2                    2   
+         17            4                NaN                2                    2   
+         18      0, 1, 3                NaN                2                    3   
+         19         1, 9                NaN                2                    1   
+         20      3, 4, 5                NaN                4        1, 2, 3, 4, 5   
+         21         1, 4                NaN                4              1, 2, 4   
+         22         2, 3                NaN                4              1, 2, 3   
+         23      3, 4, 5                NaN                3           2, 3, 4, 5   
+         24         None                NaN                2                    9   
+         25         0, 2                NaN                2                 None   
+         26         None                NaN                2                 None   
+         27         None                NaN                1                 None   
+         28         0, 3                NaN                3                    3   
+         29         None                NaN                3                    2   
+         30      0, 1, 4                NaN                3              0, 1, 4   
+         31            2                NaN                2                 None   
+         32            2                NaN                1                 None   
+         33         0, 4                NaN                1                 None   
+         34   0, 3, 4, 5                NaN                2                 None   
+         35         None                NaN                3                 0, 4   
+         36         0, 4                NaN                2                 None   
+         37      0, 1, 6                NaN                3                    2   
+         38         0, 4                NaN                4           0, 1, 3, 4   
+         39         0, 4                NaN                3                    1   
+         40         None                NaN                2                 None   
+         41      0, 4, 5                NaN                3        0, 1, 3, 4, 5   
+         42         None                NaN                4  0, 1, 2, 4, 5, 6, 9   
+         
+             sabi\_reason\_free  preference  memorized  frequency  listenable  \textbackslash{}
+         0                NaN           3          3          1           3   
+         1                NaN           3          2          2           2   
+         2                NaN           3          2          1           2   
+         3                NaN           2          2          1           2   
+         4                NaN           3          3          2           3   
+         5                NaN           3          3          2           3   
+         6                NaN           4          3          1           4   
+         7                NaN           4          3          1           4   
+         8                NaN           3          1          1           1   
+         9                NaN           2          2          1           4   
+         10               NaN           4          2          1           4   
+         11               NaN           3          2          1           4   
+         12               NaN           4          3          4           4   
+         13               NaN           4          3          4           4   
+         14               NaN           4          1          2           3   
+         15               NaN           4          2          2           3   
+         16               NaN           2          3          1           4   
+         17               NaN           3          1          1           2   
+         18               NaN           1          2          1           1   
+         19               NaN           4          3          3           3   
+         20               NaN           1          3          1           1   
+         21               NaN           4          3          3           4   
+         22               NaN           4          3          4           1   
+         23               NaN           4          3          3           3   
+         24               NaN           4          3          2           4   
+         25               NaN           4          2          1           3   
+         26               NaN           3          1          1           2   
+         27               NaN           4          3          1           3   
+         28               NaN           3          1          1           2   
+         29               NaN           4          2          1           3   
+         30               NaN           3          3          4           3   
+         31               NaN           4          2          2           4   
+         32               NaN           4          2          3           4   
+         33               NaN           3          1          2           3   
+         34               NaN           4          1          1           3   
+         35               NaN           3          2          2           3   
+         36               NaN           3          2          3           3   
+         37               NaN           4          2          2           3   
+         38               NaN           3          1          1           4   
+         39               NaN           4          2          2           3   
+         40               NaN           4          3          4           4   
+         41               NaN           4          2          3           3   
+         42               NaN           4          2          3           2   
+         
+                            other  
+         0                    NaN  
+         1                    NaN  
+         2                    NaN  
+         3                    NaN  
+         4                    NaN  
+         5                    NaN  
+         6                    NaN  
+         7                    NaN  
+         8                    NaN  
+         9                    NaN  
+         10                   NaN  
+         11                   NaN  
+         12                   NaN  
+         13                   NaN  
+         14                   NaN  
+         15                  早口言葉  
+         16                   NaN  
+         17                   NaN  
+         18                   NaN  
+         19                   NaN  
+         20                   NaN  
+         21                   NaN  
+         22  基本誰が歌っても難しいと答えると思います  
+         23        全体的に滑舌が追いつきません  
+         24                   NaN  
+         25                   NaN  
+         26                   NaN  
+         27                   NaN  
+         28                   NaN  
+         29                   NaN  
+         30                   NaN  
+         31                   NaN  
+         32                   NaN  
+         33                   NaN  
+         34                   NaN  
+         35                   NaN  
+         36                   NaN  
+         37           気分が楽しくなる曲です  
+         38                   NaN  
+         39                   NaN  
+         40                   NaN  
+         41                   NaN  
+         42                   NaN  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} \PY{k}{def} \PY{n+nf}{remove\PYZus{}space}\PY{p}{(}\PY{n}{string}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{string}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{c+c1}{\PYZsh{}扱いやすいよう理由を数字に変換}
+         \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yobijikken.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{n}{difficulty\PYZus{}count} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{9}\PY{p}{:}\PY{l+m+mi}{0}\PY{p}{\PYZcb{}}
+         
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{memorized}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{memorized}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{map}\PY{p}{(}\PY{n}{memorable}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{reason} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}reason}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{num}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{reason}\PY{p}{)}
+             \PY{n}{a} \PY{o}{=} \PY{n}{difficulty\PYZus{}to\PYZus{}tag}\PY{p}{(}\PY{n}{reason}\PY{p}{,}\PY{n}{difficulty\PYZus{}count}\PY{p}{)}
+             \PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}reason}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{n}{num}\PY{p}{]} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{[}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{reason} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}reason}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{num}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{reason}\PY{p}{)}
+             \PY{n}{a} \PY{o}{=} \PY{n}{difficulty\PYZus{}to\PYZus{}tag}\PY{p}{(}\PY{n}{reason}\PY{p}{,}\PY{n}{difficulty\PYZus{}count}\PY{p}{)}
+             \PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}reason}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{n}{num}\PY{p}{]} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{[}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{reason} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}reason}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{num}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{reason}\PY{p}{)}
+             \PY{n}{a} \PY{o}{=} \PY{n}{difficulty\PYZus{}to\PYZus{}tag}\PY{p}{(}\PY{n}{reason}\PY{p}{,}\PY{n}{difficulty\PYZus{}count}\PY{p}{)}
+             \PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}reason}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{n}{num}\PY{p}{]} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{[}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0
+滑らかに歌うことが難しいAメロだったから。
+滑らかに歌うことが難しいAメロだったから。
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}match\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\textbackslash{}\_\_main\_\_.py:12: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html\#indexing-view-versus-copy
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[9]
+1
+自分の音域に合っている
+自分の音域に合っている
+[9]
+2
+音域が滑らかに推移しており極端な上下が無い。
+音域が滑らかに推移しており極端な上下が無い。
+[9]
+3
+メロディが複雑で正確に音程を取りづらい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+4
+テンポが速い, テンポは早いが音域がそこまで広くはない印象
+テンポが速い
+ireruyo-テンポが速い
+[3]
+テンポは早いが音域がそこまで広くはない印象
+[3, 9]
+5
+音の推移が緩やかでテンポも遅い。
+音の推移が緩やかでテンポも遅い。
+[9]
+6
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[6]
+7
+音の飛びが激しく音程がとれない, 始まりの音が低く、当てられない
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+始まりの音が低く、当てられない
+[1, 9]
+8
+リズムが複雑でわかりにくい, 英語の歌詞, 低い音がとりづらい
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[4]
+英語の歌詞
+ireruyo-英語の歌詞
+[4, 7]
+低い音がとりづらい
+[4, 7, 9]
+9
+メロディが複雑で正確に音程を取りづらい, 音域が広い
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音域が広い
+ireruyo-音域が広い
+[0, 2]
+10
+音域が広い, テンポが速い
+音域が広い
+ireruyo-音域が広い
+[2]
+テンポが速い
+ireruyo-テンポが速い
+[2, 3]
+11
+ゆっくりで歌いやすいが、低いところは当てづらい
+ゆっくりで歌いやすいが、低いところは当てづらい
+[9]
+12
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある, とにかく息継ぎをするタイミングがない
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[6]
+とにかく息継ぎをするタイミングがない
+[6, 9]
+13
+メロディが複雑で正確に音程を取りづらい, シャウトやビブラートなど特殊奏法, 丁寧に、完璧に音を当てるのが他の歌より難しいイメージ。
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+シャウトやビブラートなど特殊奏法
+ireruyo-シャウトやビブラートなど特殊奏法
+[0, 8]
+丁寧に、完璧に音を当てるのが他の歌より難しいイメージ。
+[0, 8, 9]
+14
+メロディが複雑で正確に音程を取りづらい, 音の飛びが激しく音程がとれない, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい, 歌詞が難しい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[0, 1]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 1, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[0, 1, 4, 5]
+歌詞が難しい
+[0, 1, 4, 5, 9]
+15
+メロディが複雑で正確に音程を取りづらい, テンポが速い, 16分音符などが多くてリズムが細かい, ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある, 歌詞が複雑で歌いづらい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+テンポが速い
+ireruyo-テンポが速い
+[0, 3]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[0, 3, 5]
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[0, 3, 5, 6]
+歌詞が複雑で歌いづらい
+[0, 3, 5, 6, 9]
+16
+メロディが複雑で正確に音程を取りづらい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+17
+メロディが複雑で正確に音程を取りづらい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+18
+音の飛びが激しく音程がとれない, テンポが速い
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+テンポが速い
+ireruyo-テンポが速い
+[1, 3]
+19
+音の飛びが激しく音程がとれない, 音程が低い
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+音程が低い
+[1, 9]
+20
+音の飛びが激しく音程がとれない, テンポが速い, リズムが複雑でわかりにくい
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+テンポが速い
+ireruyo-テンポが速い
+[1, 3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[1, 3, 4]
+21
+音程は低いが音の跳躍等がないので歌いやすい
+音程は低いが音の跳躍等がないので歌いやすい
+[9]
+22
+音の飛びが激しく音程がとれない, テンポが速い, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+テンポが速い
+ireruyo-テンポが速い
+[1, 3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[1, 3, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[1, 3, 4, 5]
+23
+メロディが複雑で正確に音程を取りづらい, テンポが速い, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+テンポが速い
+ireruyo-テンポが速い
+[0, 3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 3, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[0, 3, 4, 5]
+24
+あ
+あ
+[9]
+25
+メロディが複雑で正確に音程を取りづらい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+26
+メロディが複雑で正確に音程を取りづらい, 音の飛びが激しく音程がとれない, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[0, 1]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 1, 4]
+27
+nan
+nannan
+28
+メロディが複雑で正確に音程を取りづらい, ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[0, 6]
+29
+nan
+nannan
+30
+メロディが複雑で正確に音程を取りづらい, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 4]
+31
+テンポが速い
+テンポが速い
+ireruyo-テンポが速い
+[3]
+32
+nan
+nannan
+33
+テンポが速い, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+テンポが速い
+ireruyo-テンポが速い
+[3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[3, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[3, 4, 5]
+34
+メロディが複雑で正確に音程を取りづらい, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[0, 4, 5]
+35
+メロディが複雑で正確に音程を取りづらい, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 4]
+36
+音域が広い, 16分音符などが多くてリズムが細かい
+音域が広い
+ireruyo-音域が広い
+[2]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[2, 5]
+37
+nan
+nannan
+38
+nan
+nannan
+39
+ゆっくりで音の変化が少なく、抑揚が付きにくい
+ゆっくりで音の変化が少なく、抑揚が付きにくい
+[9]
+40
+nan
+nannan
+41
+メロディが複雑で正確に音程を取りづらい, 音の飛びが激しく音程がとれない, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[0, 1]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 1, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[0, 1, 4, 5]
+42
+メロディが複雑で正確に音程を取りづらい, 音の飛びが激しく音程がとれない, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[0, 1]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 1, 4]
+0
+メロディが複雑で正確に音程を取りづらい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+1
+自分の音域に合っている
+自分の音域に合っている
+[9]
+2
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[6]
+3
+メロディが複雑で正確に音程を取りづらい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+4
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[6]
+5
+テンポが緩く音域が自分に合っているから。
+テンポが緩く音域が自分に合っているから。
+[9]
+6
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある, なし
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[6]
+なし
+[6, 9]
+7
+音の飛びが激しく音程がとれない, 音が上下に変わるので、正確に当てづらい
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+音が上下に変わるので、正確に当てづらい
+[1, 9]
+8
+音の飛びが激しく音程がとれない, テンポが速い, ｢進む意思よ笑う豚よ｣(？)の音の飛び方が難しい
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+テンポが速い
+ireruyo-テンポが速い
+[1, 3]
+｢進む意思よ笑う豚よ｣(？)の音の飛び方が難しい
+[1, 3, 9]
+9
+メロディが複雑で正確に音程を取りづらい, オク下で歌っているため、低いところ｢夢を見てよ、など。｣が合わせづらい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+オク下で歌っているため、低いところ｢夢を見てよ、など。｣が合わせづらい
+[0, 9]
+10
+メロディが複雑で正確に音程を取りづらい, テンポが速い, 16分音符などが多くてリズムが細かい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+テンポが速い
+ireruyo-テンポが速い
+[0, 3]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[0, 3, 5]
+11
+ララライララライの後下がるので合わせづらい
+ララライララライの後下がるので合わせづらい
+[9]
+12
+音域が比較的出しやすいのでそこまで難しく感じない
+音域が比較的出しやすいのでそこまで難しく感じない
+[9]
+13
+シャウトやビブラートなど特殊奏法
+シャウトやビブラートなど特殊奏法
+ireruyo-シャウトやビブラートなど特殊奏法
+[8]
+14
+メロディが複雑で正確に音程を取りづらい, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[0, 4, 5]
+15
+テンポが速い, ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+テンポが速い
+ireruyo-テンポが速い
+[3]
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[3, 6]
+16
+メロディが複雑で正確に音程を取りづらい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+17
+リズムが複雑でわかりにくい
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[4]
+18
+メロディが複雑で正確に音程を取りづらい, 音の飛びが激しく音程がとれない, テンポが速い
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[0, 1]
+テンポが速い
+ireruyo-テンポが速い
+[0, 1, 3]
+19
+音の飛びが激しく音程がとれない, 音程が低い
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+音程が低い
+[1, 9]
+20
+テンポが速い, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+テンポが速い
+ireruyo-テンポが速い
+[3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[3, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[3, 4, 5]
+21
+音の飛びが激しく音程がとれない, リズムが複雑でわかりにくい
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[1, 4]
+22
+音域が広い, テンポが速い
+音域が広い
+ireruyo-音域が広い
+[2]
+テンポが速い
+ireruyo-テンポが速い
+[2, 3]
+23
+テンポが速い, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+テンポが速い
+ireruyo-テンポが速い
+[3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[3, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[3, 4, 5]
+24
+nan
+nannan
+25
+メロディが複雑で正確に音程を取りづらい, 音域が広い
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音域が広い
+ireruyo-音域が広い
+[0, 2]
+26
+nan
+nannan
+27
+nan
+nannan
+28
+メロディが複雑で正確に音程を取りづらい, テンポが速い
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+テンポが速い
+ireruyo-テンポが速い
+[0, 3]
+29
+nan
+nannan
+30
+メロディが複雑で正確に音程を取りづらい, 音の飛びが激しく音程がとれない, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[0, 1]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 1, 4]
+31
+音域が広い
+音域が広い
+ireruyo-音域が広い
+[2]
+32
+音域が広い
+音域が広い
+ireruyo-音域が広い
+[2]
+33
+メロディが複雑で正確に音程を取りづらい, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 4]
+34
+メロディが複雑で正確に音程を取りづらい, テンポが速い, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+テンポが速い
+ireruyo-テンポが速い
+[0, 3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 3, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[0, 3, 4, 5]
+35
+nan
+nannan
+36
+メロディが複雑で正確に音程を取りづらい, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 4]
+37
+メロディが複雑で正確に音程を取りづらい, 音の飛びが激しく音程がとれない, ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[0, 1]
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[0, 1, 6]
+38
+メロディが複雑で正確に音程を取りづらい, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 4]
+39
+メロディが複雑で正確に音程を取りづらい, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 4]
+40
+nan
+nannan
+41
+メロディが複雑で正確に音程を取りづらい, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[0, 4, 5]
+42
+nan
+nannan
+0
+メロディが複雑で正確に音程を取りづらい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+1
+音程の移り変わりが比較的単調であり、かつテンポがゆるい
+音程の移り変わりが比較的単調であり、かつテンポがゆるい
+[9]
+2
+リズムが複雑でわかりにくい
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[4]
+3
+音の飛びが激しく音程がとれない
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+4
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある, いきなり高音から始まるので当てるのが難しい
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[6]
+いきなり高音から始まるので当てるのが難しい
+[6, 9]
+5
+音域が広い
+音域が広い
+ireruyo-音域が広い
+[2]
+6
+音域が広い
+音域が広い
+ireruyo-音域が広い
+[2]
+7
+音域が広い
+音域が広い
+ireruyo-音域が広い
+[2]
+8
+テンポが速い
+テンポが速い
+ireruyo-テンポが速い
+[3]
+9
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[6]
+10
+音域が広い, テンポが速い
+音域が広い
+ireruyo-音域が広い
+[2]
+テンポが速い
+ireruyo-テンポが速い
+[2, 3]
+11
+音域が広い, 音が高く、むせた
+音域が広い
+ireruyo-音域が広い
+[2]
+音が高く、むせた
+[2, 9]
+12
+音の飛びが激しく音程がとれない, リズムが複雑でわかりにくい, 音が飛ぶ部分があり油断すると外す。
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[1, 4]
+音が飛ぶ部分があり油断すると外す。
+[1, 4, 9]
+13
+シャウトやビブラートなど特殊奏法
+シャウトやビブラートなど特殊奏法
+ireruyo-シャウトやビブラートなど特殊奏法
+[8]
+14
+リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい, シャウトやビブラートなど特殊奏法
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[4, 5]
+シャウトやビブラートなど特殊奏法
+ireruyo-シャウトやビブラートなど特殊奏法
+[4, 5, 8]
+15
+テンポが速い, リズムが複雑でわかりにくい, ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+テンポが速い
+ireruyo-テンポが速い
+[3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[3, 4]
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[3, 4, 6]
+16
+音域が広い
+音域が広い
+ireruyo-音域が広い
+[2]
+17
+音域が広い
+音域が広い
+ireruyo-音域が広い
+[2]
+18
+テンポが速い
+テンポが速い
+ireruyo-テンポが速い
+[3]
+19
+音の飛びが激しく音程がとれない
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+20
+音の飛びが激しく音程がとれない, 音域が広い, テンポが速い, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+音域が広い
+ireruyo-音域が広い
+[1, 2]
+テンポが速い
+ireruyo-テンポが速い
+[1, 2, 3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[1, 2, 3, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[1, 2, 3, 4, 5]
+21
+音の飛びが激しく音程がとれない, 音域が広い, リズムが複雑でわかりにくい
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+音域が広い
+ireruyo-音域が広い
+[1, 2]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[1, 2, 4]
+22
+音の飛びが激しく音程がとれない, 音域が広い, テンポが速い
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+音域が広い
+ireruyo-音域が広い
+[1, 2]
+テンポが速い
+ireruyo-テンポが速い
+[1, 2, 3]
+23
+音域が広い, テンポが速い, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+音域が広い
+ireruyo-音域が広い
+[2]
+テンポが速い
+ireruyo-テンポが速い
+[2, 3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[2, 3, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[2, 3, 4, 5]
+24
+あ
+あ
+[9]
+25
+nan
+nannan
+26
+nan
+nannan
+27
+nan
+nannan
+28
+テンポが速い
+テンポが速い
+ireruyo-テンポが速い
+[3]
+29
+音域が広い
+音域が広い
+ireruyo-音域が広い
+[2]
+30
+メロディが複雑で正確に音程を取りづらい, 音の飛びが激しく音程がとれない, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[0, 1]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 1, 4]
+31
+nan
+nannan
+32
+nan
+nannan
+33
+nan
+nannan
+34
+nan
+nannan
+35
+メロディが複雑で正確に音程を取りづらい, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 4]
+36
+nan
+nannan
+37
+音域が広い
+音域が広い
+ireruyo-音域が広い
+[2]
+38
+メロディが複雑で正確に音程を取りづらい, 音の飛びが激しく音程がとれない, テンポが速い, リズムが複雑でわかりにくい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[0, 1]
+テンポが速い
+ireruyo-テンポが速い
+[0, 1, 3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 1, 3, 4]
+39
+音の飛びが激しく音程がとれない
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[1]
+40
+nan
+nannan
+41
+メロディが複雑で正確に音程を取りづらい, 音の飛びが激しく音程がとれない, テンポが速い, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[0, 1]
+テンポが速い
+ireruyo-テンポが速い
+[0, 1, 3]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 1, 3, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[0, 1, 3, 4, 5]
+42
+メロディが複雑で正確に音程を取りづらい, 音の飛びが激しく音程がとれない, 音域が広い, リズムが複雑でわかりにくい, 16分音符などが多くてリズムが細かい, ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある, 1番と2番のテンポやリズムが異なる
+メロディが複雑で正確に音程を取りづらい
+ireruyo-メロディが複雑で正確に音程を取りづらい
+[0]
+音の飛びが激しく音程がとれない
+ireruyo-音の飛びが激しく音程がとれない
+[0, 1]
+音域が広い
+ireruyo-音域が広い
+[0, 1, 2]
+リズムが複雑でわかりにくい
+ireruyo-リズムが複雑でわかりにくい
+[0, 1, 2, 4]
+16分音符などが多くてリズムが細かい
+ireruyo-16分音符などが多くてリズムが細かい
+[0, 1, 2, 4, 5]
+ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+ireruyo-ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある
+[0, 1, 2, 4, 5, 6]
+1番と2番のテンポやリズムが異なる
+[0, 1, 2, 4, 5, 6, 9]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}match\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\textbackslash{}\_\_main\_\_.py:17: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html\#indexing-view-versus-copy
+C:\textbackslash{}Users\textbackslash{}match\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\textbackslash{}\_\_main\_\_.py:22: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html\#indexing-view-versus-copy
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}43}]:} \PY{n}{difficulty\PYZus{}novel} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{difficulty\PYZus{}count}\PY{p}{)}
+         \PY{n}{difficulty\PYZus{}num} \PY{o}{=}\PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+         \PY{k}{for} \PY{n}{key} \PY{o+ow}{in} \PY{n}{difficulty\PYZus{}count}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{difficulty\PYZus{}count}\PY{p}{[}\PY{n}{key}\PY{p}{]}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{key}\PY{p}{)}
+             \PY{n}{difficulty\PYZus{}num} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{v}\PY{p}{:}\PY{n}{k} \PY{k}{for} \PY{n}{k}\PY{p}{,}\PY{n}{v} \PY{o+ow}{in} \PY{n}{difficulty}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+             \PY{n}{difficulty\PYZus{}novel}\PY{p}{[}\PY{n}{difficulty\PYZus{}num}\PY{p}{[}\PY{n}{key}\PY{p}{]}\PY{p}{]} \PY{o}{=} \PY{n}{difficulty\PYZus{}count}\PY{p}{[}\PY{n}{key}\PY{p}{]}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{difficulty\PYZus{}novel}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{difficulty\PYZus{}num}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{0: 39, 1: 27, 2: 21, 3: 28, 4: 36, 5: 19, 6: 13, 7: 1, 8: 4, 9: 31\}
+39
+0
+27
+1
+21
+2
+28
+3
+36
+4
+19
+5
+13
+6
+1
+7
+4
+8
+31
+9
+\{'メロディが複雑で正確に音程を取りづらい': 39, '音の飛びが激しく音程がとれない': 27, '音域が広い': 21, 'テンポが速い': 28, 'リズムが複雑でわかりにくい': 36, '16分音符などが多くてリズムが細かい': 19, 'ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある': 13, '英語の歌詞': 1, 'シャウトやビブラートなど特殊奏法': 4, 'other': 31\}
+\{0: 'メロディが複雑で正確に音程を取りづらい', 1: '音の飛びが激しく音程がとれない', 2: '音域が広い', 3: 'テンポが速い', 4: 'リズムが複雑でわかりにくい', 5: '16分音符などが多くてリズムが細かい', 6: 'ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある', 7: '英語の歌詞', 8: 'シャウトやビブラートなど特殊奏法', 9: 'other', 100: nan\}
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}44}]:} \PY{k}{def} \PY{n+nf}{remove\PYZus{}none}\PY{p}{(}\PY{n}{string}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{string} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{None}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                 \PY{k}{return} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{k}{return} \PY{n+nb}{int}\PY{p}{(}\PY{n}{string}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}94}]:} \PY{n}{a} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{b} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{s} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{tantai} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{dif} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]} \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]}
+         \PY{n}{reason\PYZus{}section} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{c+c1}{\PYZsh{}print(dif)}
+         \PY{n}{cf} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{p}{)}
+         \PY{n}{multi\PYZus{}reason} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{k}{for} \PY{n}{data} \PY{o+ow}{in} \PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}reason}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+             \PY{n}{a}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{,}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}print(a)}
+         \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{reasons} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{:}
+            
+             \PY{c+c1}{\PYZsh{}print(\PYZdq{}reasons \PYZob{}\PYZcb{},\PYZob{}\PYZcb{}\PYZdq{}.format(reasons,type(reasons)))}
+             \PY{n}{reasons} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{n}{remove\PYZus{}space}\PY{p}{,}\PY{n}{reasons}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{reasons}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{1}\PY{p}{:}
+                 \PY{n}{tantai}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{remove\PYZus{}none}\PY{p}{(}\PY{n}{reasons}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{lis} \PY{o}{=} \PY{n}{tessa}\PY{p}{(}\PY{n}{reasons}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{}print(\PYZdq{}lis : \PYZob{}\PYZcb{}\PYZdq{}.format(lis))}
+                 \PY{k}{if} \PY{n}{multi\PYZus{}reason} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                     \PY{n}{cf} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{lis}\PY{p}{)}
+                     \PY{c+c1}{\PYZsh{}print(\PYZdq{}tyoyo\PYZob{}\PYZcb{}\PYZdq{}.format(cf))}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{c} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{lis}\PY{p}{)}
+                     \PY{n}{cf} \PY{o}{=} \PY{n}{c} \PY{o}{+} \PY{n}{cf}
+                 \PY{n}{multi\PYZus{}reason} \PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1} 
+         \PY{c+c1}{\PYZsh{}print(\PYZdq{}all of riyuu:\PYZob{}\PYZcb{}\PYZdq{}.format(cf))}
+         \PY{n}{cf\PYZus{}A} \PY{o}{=} \PY{n}{cf}
+         \PY{n}{reason\PYZus{}section}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{cf\PYZus{}A}\PY{p}{)}
+         \PY{n}{cf} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{p}{)}
+         \PY{k}{for} \PY{n}{data} \PY{o+ow}{in} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bmero\PYZus{}reason}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+             \PY{n}{b}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{,}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}print(a)}
+         \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{reasons} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{b}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{}print(\PYZdq{}reasons \PYZob{}\PYZcb{},\PYZob{}\PYZcb{}\PYZdq{}.format(reasons,type(reasons)))}
+             \PY{n}{reasons} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{n}{remove\PYZus{}space}\PY{p}{,}\PY{n}{reasons}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{reasons}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{1}\PY{p}{:}
+                 \PY{n}{tantai}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{remove\PYZus{}none}\PY{p}{(}\PY{n}{reasons}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{lis} \PY{o}{=} \PY{n}{tessa}\PY{p}{(}\PY{n}{reasons}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{}print(\PYZdq{}lis : \PYZob{}\PYZcb{}\PYZdq{}.format(lis))}
+                 \PY{k}{if} \PY{n}{multi\PYZus{}reason} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                     \PY{n}{cf} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{lis}\PY{p}{)}
+                     \PY{c+c1}{\PYZsh{}print(\PYZdq{}tyoyo\PYZob{}\PYZcb{}\PYZdq{}.format(cf))}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{c} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{lis}\PY{p}{)}
+                     \PY{n}{cf} \PY{o}{=} \PY{n}{c} \PY{o}{+} \PY{n}{cf}
+                 \PY{n}{multi\PYZus{}reason} \PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1} 
+         \PY{c+c1}{\PYZsh{}print(\PYZdq{}all of riyuu:\PYZob{}\PYZcb{}\PYZdq{}.format(cf))}
+         \PY{n}{cf\PYZus{}B} \PY{o}{=} \PY{n}{cf}
+         \PY{n}{reason\PYZus{}section}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{cf\PYZus{}B}\PY{p}{)}
+         \PY{n}{cf} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{p}{)}
+         \PY{k}{for} \PY{n}{data} \PY{o+ow}{in} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sabi\PYZus{}reason}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+             \PY{n}{s}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{,}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}print(a)}
+         \PY{k}{for} \PY{n}{num}\PY{p}{,}\PY{n}{reasons} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{}print(\PYZdq{}reasons \PYZob{}\PYZcb{},\PYZob{}\PYZcb{}\PYZdq{}.format(reasons,type(reasons)))}
+             \PY{n}{reasons} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{n}{remove\PYZus{}space}\PY{p}{,}\PY{n}{reasons}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{reasons}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{1}\PY{p}{:}
+                 \PY{n}{tantai}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{remove\PYZus{}none}\PY{p}{(}\PY{n}{reasons}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{lis} \PY{o}{=} \PY{n}{tessa}\PY{p}{(}\PY{n}{reasons}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{}print(\PYZdq{}lis : \PYZob{}\PYZcb{}\PYZdq{}.format(lis))}
+                 \PY{k}{if} \PY{n}{multi\PYZus{}reason} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                     \PY{n}{cf} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{lis}\PY{p}{)}
+                     \PY{c+c1}{\PYZsh{}print(\PYZdq{}tyoyo\PYZob{}\PYZcb{}\PYZdq{}.format(cf))}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{c} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{lis}\PY{p}{)}
+                     \PY{n}{cf} \PY{o}{=} \PY{n}{c} \PY{o}{+} \PY{n}{cf}
+                 \PY{n}{multi\PYZus{}reason} \PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1} 
+         \PY{c+c1}{\PYZsh{}print(\PYZdq{}all of riyuu:\PYZob{}\PYZcb{}\PYZdq{}.format(cf))}
+         \PY{n}{cf\PYZus{}S} \PY{o}{=} \PY{n}{cf}
+         \PY{n}{reason\PYZus{}section}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{cf\PYZus{}S}\PY{p}{)}
+         
+         \PY{n}{cf\PYZus{}all} \PY{o}{=} \PY{n}{cf\PYZus{}A} \PY{o}{+} \PY{n}{cf\PYZus{}B} \PY{o}{+} \PY{n}{cf\PYZus{}S}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{cf\PYZus{}all}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{riyuu} \PY{o+ow}{in} \PY{n}{cf\PYZus{}all}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{riyuu}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{cf\PYZus{}all}\PY{p}{[}\PY{n}{riyuu}\PY{p}{]}\PY{p}{)}
+             \PY{n}{dif}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{riyuu}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{riyuu}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{cf\PYZus{}all}\PY{p}{[}\PY{n}{riyuu}\PY{p}{]}
+             \PY{n}{dif}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{riyuu}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{riyuu}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{cf\PYZus{}all}\PY{p}{[}\PY{n}{riyuu}\PY{p}{]}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{p}{)}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{dif}\PY{p}{,}\PY{n}{annot}\PY{o}{=} \PY{k+kc}{True}\PY{p}{,}\PY{n}{cbar}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}\PY{n}{cmap}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Greens}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Difficulty Reason}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         \PY{n}{tc} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{tantai}\PY{p}{)}
+         \PY{n}{left} \PY{o}{=} \PY{n}{tc}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}left = list(map(str,sorted(tc.keys())))}
+         \PY{n}{height} \PY{o}{=} \PY{n}{tc}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Difficulty reason(single) counts}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{left}\PY{p}{,}\PY{n}{height}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{difficulty\PYZus{}num}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Counter(\{('0', '4'): 21, ('4', '5'): 16, ('1', '4'): 15, ('3', '4'): 12, ('0', '1'): 11, ('0', '5'): 11, ('3', '5'): 11, ('1', '3'): 9, ('0', '3'): 8, ('1', '9'): 8, ('1', '5'): 6, ('2', '3'): 6, ('0', '9'): 5, ('6', '9'): 5, ('2', '5'): 4, ('0', '6'): 4, ('4', '9'): 4, ('1', '2'): 4, ('2', '4'): 4, ('3', '6'): 3, ('3', '9'): 3, ('5', '9'): 3, ('0', '2'): 3, ('5', '6'): 2, ('1', '6'): 2, ('2', '9'): 2, ('4', '6'): 2, ('0', '8'): 1, ('8', '9'): 1, ('4', '7'): 1, ('7', '9'): 1, ('2', '6'): 1, ('4', '8'): 1, ('5', '8'): 1\})
+('0', '1')
+11
+('0', '4')
+21
+('1', '4')
+15
+('0', '5')
+11
+('1', '5')
+6
+('4', '5')
+16
+('2', '5')
+4
+('3', '4')
+12
+('3', '5')
+11
+('0', '6')
+4
+('0', '3')
+8
+('1', '3')
+9
+('1', '9')
+8
+('0', '9')
+5
+('3', '6')
+3
+('3', '9')
+3
+('5', '6')
+2
+('5', '9')
+3
+('6', '9')
+5
+('4', '9')
+4
+('0', '8')
+1
+('8', '9')
+1
+('2', '3')
+6
+('0', '2')
+3
+('4', '7')
+1
+('7', '9')
+1
+('1', '6')
+2
+('1', '2')
+4
+('2', '4')
+4
+('2', '6')
+1
+('2', '9')
+2
+('4', '6')
+2
+('4', '8')
+1
+('5', '8')
+1
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_43_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{0: 'メロディが複雑で正確に音程を取りづらい', 1: '音の飛びが激しく音程がとれない', 2: '音域が広い', 3: 'テンポが速い', 4: 'リズムが複雑でわかりにくい', 5: '16分音符などが多くてリズムが細かい', 6: 'ロングトーンがあったり息継ぎタイミングがわかりにくく肺活量的に無理がある', 7: '英語の歌詞', 8: 'シャウトやビブラートなど特殊奏法', 9: 'other', 100: nan\}
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_43_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}93}]:} \PY{n}{df}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yobijikken\PYZus{}cleaned.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{encoding}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{utf\PYZhy{}8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{n}{songs} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{チェリー}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{TSUNAMI}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{紅蓮の弓矢}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{浪漫飛行}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{アポロ}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{粉雪}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{make\PYZus{}count\PYZus{}query}\PY{p}{(}\PY{n}{song}\PY{p}{,}\PY{n}{koumoku}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{}バグがでます}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{song.str.contains(}\PY{l+s+s2}{\PYZdq{}}\PY{o}{+}\PY{n}{song}\PY{o}{+}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{engine}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{python}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{[}\PY{n}{koumoku}\PY{p}{]}\PY{o}{.}\PY{n}{value}\PY{o}{.}\PY{n}{sounts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{make\PYZus{}count\PYZus{}query}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{チェリー}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        NameError                                 Traceback (most recent call last)
+
+        <ipython-input-4-ab70c4906fee> in <module>()
+    ----> 1 make\_count\_query("チェリー","amero\_difficulty")
+    
+
+        <ipython-input-3-d29702f7850f> in make\_count\_query(song, koumoku)
+          1 def make\_count\_query(song,koumoku):
+          2     \#バグがでます
+    ----> 3     print(df.query("song.str.contains("+song+")",engine="python")[koumoku].value.sounts())
+    
+
+        NameError: name 'df' is not defined
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}54}]:} \PY{c+c1}{\PYZsh{}Aメロの難易度を集計}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{チェリー}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{チェリー}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{チェリー}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mode}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{TSUNAMI}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{TSUNAMI}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{TSUNAMI}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mode}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{紅蓮の弓矢}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{紅蓮の弓矢}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{紅蓮の弓矢}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mode}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{浪漫飛行}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{浪漫飛行}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{浪漫飛行}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mode}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{アポロ}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{アポロ}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{アポロ}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mode}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{粉雪}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{粉雪}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{粉雪}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mode}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{====Aメロ合計====}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{amero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+チェリー
+2    3
+1    2
+3    1
+Name: amero\_difficulty, dtype: int64
+count    6.000000
+mean     1.833333
+std      0.752773
+min      1.000000
+25\%      1.250000
+50\%      2.000000
+75\%      2.000000
+max      3.000000
+Name: amero\_difficulty, dtype: float64
+0    2
+dtype: int64
+TSUNAMI
+3    2
+2    2
+1    1
+Name: amero\_difficulty, dtype: int64
+count    5.00000
+mean     2.20000
+std      0.83666
+min      1.00000
+25\%      2.00000
+50\%      2.00000
+75\%      3.00000
+max      3.00000
+Name: amero\_difficulty, dtype: float64
+0    2
+1    3
+dtype: int64
+紅蓮の弓矢
+2    3
+4    1
+Name: amero\_difficulty, dtype: int64
+count    4.0
+mean     2.5
+std      1.0
+min      2.0
+25\%      2.0
+50\%      2.0
+75\%      2.5
+max      4.0
+Name: amero\_difficulty, dtype: float64
+0    2
+dtype: int64
+浪漫飛行
+3    3
+4    1
+1    1
+Name: amero\_difficulty, dtype: int64
+count    5.000000
+mean     2.800000
+std      1.095445
+min      1.000000
+25\%      3.000000
+50\%      3.000000
+75\%      3.000000
+max      4.000000
+Name: amero\_difficulty, dtype: float64
+0    3
+dtype: int64
+アポロ
+3    2
+2    2
+1    1
+Name: amero\_difficulty, dtype: int64
+count    5.00000
+mean     2.20000
+std      0.83666
+min      1.00000
+25\%      2.00000
+50\%      2.00000
+75\%      3.00000
+max      3.00000
+Name: amero\_difficulty, dtype: float64
+0    2
+1    3
+dtype: int64
+粉雪
+1    3
+3    2
+2    1
+Name: amero\_difficulty, dtype: int64
+count    6.000000
+mean     1.833333
+std      0.983192
+min      1.000000
+25\%      1.000000
+50\%      1.500000
+75\%      2.750000
+max      3.000000
+Name: amero\_difficulty, dtype: float64
+0    1
+dtype: int64
+====Aメロ合計====
+3    14
+2    11
+4     9
+1     9
+Name: amero\_difficulty, dtype: int64
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}49}]:} \PY{c+c1}{\PYZsh{}Bメロの難易度を集計}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{チェリー}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{チェリー}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{TSUNAMI}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{TSUNAMI}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{紅蓮の弓矢}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{紅蓮の弓矢}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{浪漫飛行}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{浪漫飛行}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{アポロ}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{アポロ}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{粉雪}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{粉雪}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{====Bメロ合計====}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bmero\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+チェリー
+1    3
+3    2
+2    1
+Name: bmero\_difficulty, dtype: int64
+1.8333333333333333
+TSUNAMI
+3    3
+2    1
+1    1
+Name: bmero\_difficulty, dtype: int64
+2.4
+紅蓮の弓矢
+3    2
+2    1
+4    1
+Name: bmero\_difficulty, dtype: int64
+3.0
+浪漫飛行
+4    2
+3    1
+2    1
+1    1
+Name: bmero\_difficulty, dtype: int64
+2.8
+アポロ
+3    4
+2    1
+Name: bmero\_difficulty, dtype: int64
+2.8
+粉雪
+2    3
+4    1
+3    1
+1    1
+Name: bmero\_difficulty, dtype: int64
+2.3333333333333335
+====Bメロ合計====
+3    16
+2    14
+1     7
+4     6
+Name: bmero\_difficulty, dtype: int64
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{c+c1}{\PYZsh{}サビの難易度を集計}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{チェリー}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{チェリー}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{TSUNAMI}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{TSUNAMI}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{紅蓮の弓矢}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{紅蓮の弓矢}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{浪漫飛行}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{浪漫飛行}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{アポロ}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{アポロ}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{songs}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{粉雪}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{song.str.contains(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{engine}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{====サビ合計====}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sabi\PYZus{}difficulty}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+チェリー
+2    3
+3    2
+1    1
+Name: sabi\_difficulty, dtype: int64
+2.1666666666666665
+TSUNAMI
+2    3
+1    2
+Name: sabi\_difficulty, dtype: int64
+1.6
+紅蓮の弓矢
+2    2
+3    1
+1    1
+Name: sabi\_difficulty, dtype: int64
+2.0
+浪漫飛行
+2    3
+3    1
+1    1
+Name: sabi\_difficulty, dtype: int64
+2.0
+アポロ
+4    3
+3    1
+1    1
+Name: sabi\_difficulty, dtype: int64
+3.2
+粉雪
+3    4
+4    1
+1    1
+Name: sabi\_difficulty, dtype: int64
+2.558139534883721
+====サビ合計====
+3    15
+2    13
+4     8
+1     7
+Name: sabi\_difficulty, dtype: int64
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{def} \PY{n+nf}{count\PYZus{}coencount\PYZus{}difficulty}\PY{p}{(}\PY{n}{dataframe}\PY{p}{)}\PY{p}{:}
+            
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
